@@ -17,7 +17,11 @@
 			},
 			"correctness": {
 				"useExhaustiveDependencies": "warn"
-			}
+			},
+			"style": {
+				"noParameterAssign": "off"
+			},
+			"complexity": { "noUselessLoneBlockStatements": "off" }
 		}
 	},
 	"formatter": {

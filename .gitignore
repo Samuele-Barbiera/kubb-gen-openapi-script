@@ -72,9 +72,6 @@ web_modules/
 
 .npm
 
-# Optional eslint cache
-
-.eslintcache
 
 # Optional stylelint cache
 
@@ -174,6 +171,7 @@ dist
 
 # Finder (MacOS) folder config
 .DS_Store
-src/
+
+api/
 path_to_your_openapi_updated.yaml
 path_to_your_openapi.yaml

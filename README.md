@@ -22,7 +22,7 @@ This script loads an OpenAPI document from a YAML file, processes it by removing
 
 The script uses the following modules:
 
-fs: Node.js built-in module for file system operations.
+bun.file: Node.js built-in module for file system operations.
 yaml: A module for parsing and stringifying YAML data.
 
 ### Functions
