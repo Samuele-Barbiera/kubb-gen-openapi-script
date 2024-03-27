@@ -1,10 +1,5 @@
 import * as yaml from "js-yaml";
-import type {
-	BlackListData,
-	OpenApiDocument,
-	Parameter,
-	ParameterBlockIndices,
-} from "./types";
+import type { BlackListData, OpenApiDocument, Parameter, ParameterBlockIndices } from "./types";
 
 /**
  * This script loads an OpenAPI document from a YAML file, processes it by removing unmatched path parameters,
@@ -26,10 +21,7 @@ async function loadOpenApiDocument(filePath: string): Promise<OpenApiDocument> {
  * @param filePath - The path to save the YAML file.
  * @param document - The OpenAPI document to save.
  */
-async function saveOpenApiDocument(
-	filePath: string,
-	document: OpenApiDocument,
-): Promise<void> {
+async function saveOpenApiDocument(filePath: string, document: OpenApiDocument): Promise<void> {
 	const yamlStr = yaml.dump(document, { noRefs: true, lineWidth: -1 });
 	await Bun.write(filePath, yamlStr);
 }
@@ -43,15 +35,13 @@ function processDocument(document: OpenApiDocument): OpenApiDocument {
 	for (const [path, pathItem] of Object.entries(document.paths)) {
 		for (const [_, operation] of Object.entries(pathItem)) {
 			if (operation?.parameters) {
-				operation.parameters = operation.parameters.filter(
-					(parameter: { in: string; name: string }) => {
-						if (parameter.in === "path") {
-							// Check if the path string contains the parameter
-							return path.includes(`{${parameter.name}}`);
-						}
-						return true; // Keep query, header, and other types of parameters
-					},
-				);
+				operation.parameters = operation.parameters.filter((parameter: { in: string; name: string }) => {
+					if (parameter.in === "path") {
+						// Check if the path string contains the parameter
+						return path.includes(`{${parameter.name}}`);
+					}
+					return true; // Keep query, header, and other types of parameters
+				});
 			}
 		}
 	}
@@ -79,11 +69,7 @@ async function loadBlackListData(filePath: string): Promise<BlackListData> {
  * @param url - The URL to match within the correct URL block.
  * @returns An object containing the start and end indices of the parameter block.
  */
-function findParameterBlock(
-	lines: string[],
-	parameterName: string,
-	url: string,
-): ParameterBlockIndices {
+function findParameterBlock(lines: string[], parameterName: string, url: string): ParameterBlockIndices {
 	let parameterBlockStart = -1;
 	let parameterBlockEnd = -1;
 	let inCorrectUrlBlock = false;
@@ -93,24 +79,14 @@ function findParameterBlock(
 			inCorrectUrlBlock = true;
 		}
 
-		if (
-			(line.includes("path:") && !line.includes(url)) ||
-			index === lines.length - 1
-		) {
+		if ((line.includes("path:") && !line.includes(url)) || index === lines.length - 1) {
 			inCorrectUrlBlock = false;
 		}
 
-		if (
-			inCorrectUrlBlock &&
-			line.includes("- in: path") &&
-			lines[index + 1]?.includes(`name: ${parameterName}`)
-		) {
+		if (inCorrectUrlBlock && line.includes("- in: path") && lines[index + 1]?.includes(`name: ${parameterName}`)) {
 			parameterBlockStart = index;
 			for (let endIndex = index + 1; endIndex < lines.length; endIndex++) {
-				if (
-					lines[endIndex].includes("- in:") ||
-					lines[endIndex].includes("path:")
-				) {
+				if (lines[endIndex]?.includes("- in:") || lines[endIndex]?.includes("path:")) {
 					parameterBlockEnd = endIndex;
 					break;
 				}
@@ -130,10 +106,7 @@ function findParameterBlock(
  * @param yamlFilePath - The path to the YAML file.
  * @returns A Promise that resolves when the blacklisted parameters are removed successfully.
  */
-async function removeBlacklistedParameters(
-	blacklistFileConfigPath: string,
-	yamlFilePath: string,
-): Promise<void> {
+async function removeBlacklistedParameters(blacklistFileConfigPath: string, yamlFilePath: string): Promise<void> {
 	// Load the blacklist data from a JSON file
 	const loadBlackListJson = await loadBlackListData(blacklistFileConfigPath);
 	const yamlContent = await Bun.file(yamlFilePath).text();
@@ -150,11 +123,13 @@ async function removeBlacklistedParameters(
 		const { url, parameterName } = entry;
 
 		// Navigate to the specific path in the document
-		if ("parameters" in document.paths[url]) {
-			document.paths[url].parameters = document.paths[url].parameters?.filter(
-				(param: { in: string; name: string }) =>
-					!(param.in === "path" && param.name === parameterName),
-			);
+		if (document.paths[url]) {
+			let parameters = document.paths[url]?.parameters;
+			if (parameters) {
+				parameters = parameters.filter(
+					(param: { in: string; name: string }) => !(param.in === "path" && param.name === parameterName)
+				);
+			}
 		}
 	}
 
@@ -170,10 +145,7 @@ async function removeBlacklistedParameters(
  * @param openApiFilePath - The path to the OpenAPI YAML file.
  * @param blacklistFileConfigPath - The path to the blacklist JSON file.
  */
-async function processOpenApiDocument(
-	openApiFilePath: string,
-	blacklistFileConfigPath: string,
-): Promise<void> {
+async function processOpenApiDocument(openApiFilePath: string, blacklistFileConfigPath: string): Promise<void> {
 	try {
 		// Load the OpenAPI document from a YAML file
 		const openApiDocument = await loadOpenApiDocument(openApiFilePath);
@@ -182,20 +154,12 @@ async function processOpenApiDocument(
 		const updatedDocument = processDocument(openApiDocument);
 
 		// Save the updated OpenAPI document as a new YAML file
-		await saveOpenApiDocument(
-			openApiFilePath.replace(".yaml", "_updated.yaml"),
-			updatedDocument,
-		);
+		await saveOpenApiDocument(openApiFilePath.replace(".yaml", "_updated.yaml"), updatedDocument);
 
-		console.log(
-			"OpenAPI document processed. Unmatched path parameters removed.",
-		);
+		console.log("OpenAPI document processed. Unmatched path parameters removed.");
 
 		// Remove blacklisted parameters from the OpenAPI document
-		await removeBlacklistedParameters(
-			blacklistFileConfigPath,
-			"path_to_your_openapi_updated.yaml",
-		);
+		await removeBlacklistedParameters(blacklistFileConfigPath, "path_to_your_openapi_updated.yaml");
 	} catch (error) {
 		console.error("An error occurred:", error);
 	}

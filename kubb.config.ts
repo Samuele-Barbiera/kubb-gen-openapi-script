@@ -3,9 +3,9 @@ import createSwagger from "@kubb/swagger";
 import createSwaggerTanstackQuery from "@kubb/swagger-tanstack-query";
 import createSwaggerTS from "@kubb/swagger-ts";
 
-import * as queryKey from "./templates/queryKey/index";
-import * as operations from "./templates/operations/index";
 import * as mutation from "./templates/mutate/index";
+import * as operations from "./templates/operations/index";
+import * as queryKey from "./templates/queryKey/index";
 
 export default defineConfig(async () => {
 	return {
@@ -28,10 +28,7 @@ export default defineConfig(async () => {
 			}),
 			createSwaggerTanstackQuery({
 				transformers: {
-					name: (
-						name: string,
-						type?: "function" | "type" | "file" | undefined,
-					) => {
+					name: (name: string, type?: "function" | "type" | "file" | undefined) => {
 						if (type === "file" || type === "function") {
 							return `${name}Hook`;
 						}
@@ -43,7 +40,7 @@ export default defineConfig(async () => {
 				},
 				framework: "react",
 				query: {
-					queryKey: (keys) => ['"v5"', ...keys],
+					queryKey: keys => ['"v5"', ...keys],
 				},
 				suspense: {},
 				override: [

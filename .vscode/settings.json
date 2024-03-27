@@ -1,0 +1,19 @@
+{
+	"typescript.tsdk": "node_modules\\typescript\\lib",
+	"tailwindCSS.experimental.classRegex": [["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"]],
+	"typescript.preferences.importModuleSpecifier": "non-relative",
+	"prettier.enable": false,
+	"editor.defaultFormatter": "biomejs.biome",
+	"[typescriptreact]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[tailwindcss]": {
+		"editor.defaultFormatter": "biomejs.biome"
+	},
+	"[css]": {
+		"editor.defaultFormatter": "biomejs.biome",
+		"editor.suggest.insertMode": "replace"
+	},
+	"css.lint.unknownAtRules": "ignore",
+	"files.eol": "\r\n"
+}
