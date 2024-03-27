@@ -1,0 +1,12 @@
+{
+	"blacklisted": [
+		{
+			"url": "/api/backoffice/activation/get/{activable}",
+			"parameterName": "active"
+		},
+        {
+            "url":"/api/backoffice/transport/rider/get/{rider_user_id}",
+            "parameterName":"user_id"
+        }
+	]
+}
