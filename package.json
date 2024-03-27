@@ -1,21 +1,32 @@
 {
-  "name": "prova",
-  "module": "index.ts",
-  "type": "module",
-  "devDependencies": {
-    "@types/bun": "latest"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
-  "dependencies": {
-    "@kubb/cli": "^2.11.0",
-    "@kubb/core": "^2.11.0",
-    "@kubb/swagger": "^2.11.0",
-    "@kubb/swagger-tanstack-query": "^2.11.0",
-    "@kubb/swagger-ts": "^2.11.0",
-    "@types/js-yaml": "^4.0.9",
-    "js-yaml": "^4.1.0",
-    "react": "^18.2.0"
-  }
+	"name": "kubb-gen-scribe-cli",
+	"type": "module",
+	"license": "MIT",
+	"version": "0.0.1",
+	"main": "dist/index.js",
+	"module": "dist/index.mjs",
+	"types": "dist/index.d.ts",
+	"scripts": {
+		"build": "tsup index.ts --format cjs,esm --dts",
+		"release": "bun run build && changeset publish",
+		"lint": "tsc"
+	},
+	"devDependencies": {
+		"@types/bun": "latest"
+	},
+	"peerDependencies": {
+		"typescript": "^5.4.3"
+	},
+	"dependencies": {
+		"@changesets/cli": "^2.27.1",
+		"tsup": "^8.0.2",
+		"@kubb/cli": "^2.11.0",
+		"@kubb/core": "^2.11.0",
+		"@kubb/swagger": "^2.11.0",
+		"@kubb/swagger-tanstack-query": "^2.11.0",
+		"@kubb/swagger-ts": "^2.11.0",
+		"@types/js-yaml": "^4.0.9",
+		"js-yaml": "^4.1.0",
+		"react": "^18.2.0"
+	}
 }

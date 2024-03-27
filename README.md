@@ -1,4 +1,4 @@
-# prova
+# kubb-gen-scribe-cli
 
 To install dependencies:
 
