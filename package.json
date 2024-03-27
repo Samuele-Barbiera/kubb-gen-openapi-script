@@ -7,6 +7,7 @@
 	"module": "dist/index.mjs",
 	"types": "dist/index.d.ts",
 	"scripts": {
+		"preinstall": "npx only-allow bun",
 		"build": "tsup index.ts --format cjs,esm --dts",
 		"release": "bun run build && changeset publish",
 		"lint": "bunx tsc",
