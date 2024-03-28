@@ -2,8 +2,8 @@ import chalk from "chalk";
 import { execa, type StdioOption } from "execa";
 import ora, { type Ora } from "ora";
 
-import { getUserPkgManager, type PackageManager } from "~/utils/getUserPkgManager.js";
-import { logger } from "~/utils/logger.js";
+import { getUserPkgManager, type PackageManager } from "~/src/utils/getUserPkgManager.js";
+import { logger } from "~/src/utils/logger.js";
 
 const execWithSpinner = async (
 	projectDir: string,

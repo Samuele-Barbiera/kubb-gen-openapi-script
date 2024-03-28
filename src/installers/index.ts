@@ -1,4 +1,4 @@
-import type { PackageManager } from "~/utils/getUserPkgManager.js";
+import type { PackageManager } from "~/src/utils/getUserPkgManager.js";
 import { dynamicKubbAxiosInstaller } from "./kubbAxios";
 import { dynamicKubbTanstackInstaller } from "./kubbTanstack";
 

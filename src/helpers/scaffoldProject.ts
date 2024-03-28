@@ -1,12 +1,11 @@
 import path from "node:path";
-import * as p from "@clack/prompts";
 import chalk from "chalk";
 import fs from "fs-extra";
 import ora from "ora";
 
 import { PKG_ROOT } from "~/consts.js";
-import type { InstallerOptions } from "~/installers/index.js";
-import { logger } from "~/utils/logger.js";
+import type { InstallerOptions } from "~/src/installers/index.js";
+import { logger } from "~/src/utils/logger.js";
 
 // This bootstraps the base Next.js application
 export const scaffoldProject = async ({ projectDir, pkgManager, noInstall }: InstallerOptions) => {
@@ -22,8 +21,8 @@ export const scaffoldProject = async ({ projectDir, pkgManager, noInstall }: Ins
 
 	spinner.start();
 
-	fs.copySync(srcDir, projectDir);
-	fs.renameSync(path.join(projectDir, "_gitignore"), path.join(projectDir, ".gitignore"));
+	const templatesDir = path.join(projectDir, "templatesss");
+	fs.copySync(srcDir, templatesDir);
 
-	spinner.succeed(`${chalk.green("scaffolded successfully!")}\n`);
+	// spinner.succeed(`${chalk.green("scaffolded successfully!")}\n`);
 };

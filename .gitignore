@@ -175,3 +175,6 @@ dist
 api/
 path_to_your_openapi_updated.yaml
 path_to_your_openapi.yaml
+templatesss/mutate/index.tsx
+templatesss/operations/index.tsx
+templatesss/queryKey/index.tsx

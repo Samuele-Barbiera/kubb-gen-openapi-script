@@ -2,7 +2,7 @@ import path from "node:path";
 import fs from "fs-extra";
 import type { PackageJson } from "type-fest";
 import sortPackageJson from "sort-package-json";
-import { dependencyVersionMap, type AvailableDependencies } from "~/installers/dependencyVersionMap.js";
+import { dependencyVersionMap, type AvailableDependencies } from "~/src/installers/dependencyVersionMap.js";
 
 export const addPackageDependency = (opts: {
 	dependencies: AvailableDependencies[];
@@ -10,6 +10,7 @@ export const addPackageDependency = (opts: {
 	projectDir: string;
 }) => {
 	const { dependencies, devMode, projectDir } = opts;
+	console.log("🚀 ~ opts:", opts);
 
 	const pkgJson = fs.readJSONSync(path.join(projectDir, "package.json")) as PackageJson;
 
@@ -23,6 +24,7 @@ export const addPackageDependency = (opts: {
 		}
 	}
 	const sortedPkgJson = sortPackageJson(pkgJson);
+	console.log("🚀 ~ sortedPkgJson:", path.join(projectDir, "package.json"));
 
 	fs.writeJSONSync(path.join(projectDir, "package.json"), sortedPkgJson, {
 		spaces: 2,

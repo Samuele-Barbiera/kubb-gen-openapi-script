@@ -1,5 +1,5 @@
 import chalk from "chalk";
-import { getUserPkgManager } from "~/utils/getUserPkgManager.js";
+import { getUserPkgManager } from "~/src/utils/getUserPkgManager.js";
 
 export const renderTitle = () => {
 	// resolves weird behavior where the ascii is offset

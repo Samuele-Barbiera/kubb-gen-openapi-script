@@ -1,9 +1,9 @@
 import path from "node:path";
 
 import fs from "fs-extra";
-import type { Installer } from "~/installers/index.js";
-import { addPackageDependency } from "~/utils/addPackageDependency";
-import type { AvailableDependencies } from "~/installers/dependencyVersionMap";
+import type { Installer } from "~/src/installers/index.js";
+import { addPackageDependency } from "~/src/utils/addPackageDependency";
+import type { AvailableDependencies } from "~/src/installers/dependencyVersionMap";
 import { PKG_ROOT } from "~/consts";
 
 const getKubbConfig = () => {

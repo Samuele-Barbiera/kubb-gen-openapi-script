@@ -1,13 +1,12 @@
 import * as p from "@clack/prompts";
-import run from "@kubb/cli";
 import { Command } from "commander";
 import { execa } from "execa";
 import { CREATE_SDK_CLI } from "~/consts.js";
-import type { AvailablePackages } from "~/installers/index.js";
-import { getVersion } from "~/utils/getKubbSwaggerCliVersion.js";
-import { getUserPkgManager } from "~/utils/getUserPkgManager.js";
-import { IsTTYError } from "~/utils/isTTYError.js";
-import { logger } from "~/utils/logger.js";
+import type { AvailablePackages } from "~/src/installers/index.js";
+import { getVersion } from "~/src/utils/getKubbSwaggerCliVersion.js";
+import { getUserPkgManager } from "~/src/utils/getUserPkgManager.js";
+import { IsTTYError } from "~/src/utils/isTTYError.js";
+import { logger } from "~/src/utils/logger.js";
 
 interface CliFlags {
 	noInstall: boolean;
@@ -44,7 +43,7 @@ export const runCli = async (): Promise<CliResults> => {
 		/** @experimental - Used for CI E2E tests. Used in conjunction with `--CI` to skip prompting. */
 		.option(
 			"-i, --import-swagger",
-			"Explicitly tell the CLI to use a custom import alias",
+			"Explicitly tell the CLI to use a custom path to the swagger file. Default is './openapi.yaml",
 			defaultOptions.flags.importSwaggerFilePath
 		)
 		/** END CI-FLAGS */
@@ -118,7 +117,13 @@ export const runCli = async (): Promise<CliResults> => {
 		);
 
 		const packages: AvailablePackages[] = [];
-		if (project.runKubb) packages.push("kubbAxios", "kubbTanstack");
+		console.log("🚀 ~ runCli ~ packages:", project.runKubb);
+		if (project.runKubb === "tanstack-query") {
+			packages.push("kubbTanstack");
+		} else {
+			packages.push("kubbAxios");
+		}
+		console.log("🚀 ~ runCli ~ packages:", packages);
 
 		return {
 			packages,

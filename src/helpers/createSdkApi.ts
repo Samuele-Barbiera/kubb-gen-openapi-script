@@ -1,17 +1,17 @@
 import path from "node:path";
 
-import { installPackages } from "~/helpers/installPackages.js";
-import { scaffoldProject } from "~/helpers/scaffoldProject";
-import { selectAppFile, selectIndexFile } from "~/helpers/selectBoilerplate.js";
-import type { PkgInstallerMap } from "~/installers/index.js";
-import { getUserPkgManager } from "~/utils/getUserPkgManager.js";
+import { installPackages } from "~/src/helpers/installPackages.js";
+import { scaffoldProject } from "~/src/helpers/scaffoldProject";
+import { selectAppFile, selectIndexFile } from "~/src/helpers/selectBoilerplate.js";
+import type { PkgInstallerMap } from "~/src/installers/index.js";
+import { getUserPkgManager } from "~/src/utils/getUserPkgManager.js";
 
-interface CreateProjectOptions {
+interface CreateSdkApiOptions {
 	packages: PkgInstallerMap;
 	noInstall: boolean;
 }
 
-export const createProject = async ({ packages, noInstall }: CreateProjectOptions) => {
+export const createSdkApi = async ({ packages, noInstall }: CreateSdkApiOptions) => {
 	const pkgManager = getUserPkgManager();
 	const projectDir = path.resolve(process.cwd());
 

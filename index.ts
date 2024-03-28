@@ -4,16 +4,16 @@ import { execa } from "execa";
 import type { PackageJson } from "type-fest";
 
 import fs from "fs-extra";
-import { runCli } from "~/cli/index.js";
-import { createProject } from "~/helpers/createProject.js";
-import { logNextSteps } from "~/helpers/logNextSteps.js";
-import { buildPkgInstallerMap } from "~/installers/index.js";
-import { getUserPkgManager } from "~/utils/getUserPkgManager.js";
-import { logger } from "~/utils/logger.js";
-import { renderTitle } from "~/utils/renderTitle.js";
-import { installDependencies } from "~/helpers/installDependencies.js";
-import { getVersion } from "~/utils/getKubbSwaggerCliVersion.js";
-import { getNpmVersion, renderVersionWarning } from "~/utils/renderVersionWarning.js";
+import { runCli } from "~/src/start/index.js";
+import { createSdkApi } from "~/src/helpers/createSdkApi.js";
+import { logNextSteps } from "~/src/helpers/logNextSteps.js";
+import { buildPkgInstallerMap } from "~/src/installers/index.js";
+import { getUserPkgManager } from "~/src/utils/getUserPkgManager.js";
+import { logger } from "~/src/utils/logger.js";
+import { renderTitle } from "~/src/utils/renderTitle.js";
+import { installDependencies } from "~/src/helpers/installDependencies.js";
+import { getVersion } from "~/src/utils/getKubbSwaggerCliVersion.js";
+import { getNpmVersion, renderVersionWarning } from "~/src/utils/renderVersionWarning.js";
 
 type KubbSwaggerCliPackageJSON = PackageJson & {
 	cKubbSwaggerCliaMetadata?: {
@@ -34,7 +34,7 @@ const main = async () => {
 
 	const usePackages = buildPkgInstallerMap(packages);
 
-	const projectDir = await createProject({
+	const projectDir = await createSdkApi({
 		packages: usePackages,
 
 		noInstall,
