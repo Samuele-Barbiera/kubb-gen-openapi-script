@@ -4,31 +4,21 @@ import https from "node:https";
 import { getVersion } from "./getKubbSwaggerCliVersion.js";
 import { logger } from "./logger.js";
 
-export const renderVersionWarning =async (npmVersion: string) => {
-  const currentVersion = await getVersion();
+export const renderVersionWarning = (npmVersion: string) => {
+	const currentVersion = getVersion();
 
-  //   console.log("current", currentVersion);
-  //   console.log("npm", npmVersion);
-
-  if (currentVersion.includes("beta")) {
-    logger.warn("  You are using a beta version of kubb-gen-scribe-cli.");
-    logger.warn("  Please report any bugs you encounter.");
-  } else if (currentVersion.includes("next")) {
-    logger.warn(
-      "  You are running kubb-gen-scribe-cli with the @next tag which is no longer maintained."
-    );
-    logger.warn("  Please run the CLI with @latest instead.");
-  } else if (currentVersion !== npmVersion) {
-    logger.warn("  You are using an outdated version of kubb-gen-scribe-cli.");
-    logger.warn(
-      "  Your version:",
-      `${currentVersion}.`,
-      "Latest version in the npm registry:",
-      npmVersion
-    );
-    logger.warn("  Please run the CLI with @latest to get the latest updates.");
-  }
-  console.log("");
+	if (currentVersion.includes("beta")) {
+		logger.warn("  You are using a beta version of kubb-gen-scribe-cli.");
+		logger.warn("  Please report any bugs you encounter.");
+	} else if (currentVersion.includes("next")) {
+		logger.warn("  You are running kubb-gen-scribe-cli with the @next tag which is no longer maintained.");
+		logger.warn("  Please run the CLI with @latest instead.");
+	} else if (currentVersion !== npmVersion) {
+		logger.warn("  You are using an outdated version of kubb-gen-scribe-cli.");
+		logger.warn("  Your version:", `${currentVersion}.`, "Latest version in the npm registry:", npmVersion);
+		logger.warn("  Please run the CLI with @latest to get the latest updates.");
+	}
+	console.log("");
 };
 
 /**
@@ -39,40 +29,37 @@ export const renderVersionWarning =async (npmVersion: string) => {
  * https://github.com/facebook/create-react-app/blob/main/packages/create-react-app/LICENSE
  */
 interface DistTagsBody {
-  latest: string;
+	latest: string;
 }
 
 function checkForLatestVersion(): Promise<string> {
-  return new Promise((resolve, reject) => {
-    https
-      .get(
-        "https://registry.npmjs.org/-/package/kubb-gen-scribe-cli/dist-tags",
-        (res) => {
-          if (res.statusCode === 200) {
-            let body = "";
-            // biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
-            res.on("data", (data) => (body += data));
-            res.on("end", () => {
-              resolve((JSON.parse(body) as DistTagsBody).latest);
-            });
-          } else {
-            reject();
-          }
-        }
-      )
-      .on("error", () => {
-        // logger.error("Unable to check for latest version.");
-        reject();
-      });
-  });
+	return new Promise((resolve, reject) => {
+		https
+			.get("https://registry.npmjs.org/-/package/kubb-gen-scribe-cli/dist-tags", res => {
+				if (res.statusCode === 200) {
+					let body = "";
+					// biome-ignore lint/suspicious/noAssignInExpressions: <explanation>
+					res.on("data", data => (body += data));
+					res.on("end", () => {
+						resolve((JSON.parse(body) as DistTagsBody).latest);
+					});
+				} else {
+					reject();
+				}
+			})
+			.on("error", () => {
+				// logger.error("Unable to check for latest version.");
+				reject();
+			});
+	});
 }
 
 export const getNpmVersion = () =>
-  // `fetch` to the registry is faster than `npm view` so we try that first
-  checkForLatestVersion().catch(() => {
-    try {
-      return execSync("npm view kubb-gen-scribe-cli version").toString().trim();
-    } catch {
-      return null;
-    }
-  });
+	// `fetch` to the registry is faster than `npm view` so we try that first
+	checkForLatestVersion().catch(() => {
+		try {
+			return execSync("npm view kubb-gen-scribe-cli version").toString().trim();
+		} catch {
+			return null;
+		}
+	});

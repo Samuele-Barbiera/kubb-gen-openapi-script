@@ -1,17 +1,18 @@
 import * as p from "@clack/prompts";
+import run from "@kubb/cli";
 import { Command } from "commander";
+import { execa } from "execa";
 import { CREATE_SDK_CLI } from "~/consts.js";
 import type { AvailablePackages } from "~/installers/index.js";
 import { getVersion } from "~/utils/getKubbSwaggerCliVersion.js";
 import { getUserPkgManager } from "~/utils/getUserPkgManager.js";
 import { IsTTYError } from "~/utils/isTTYError.js";
 import { logger } from "~/utils/logger.js";
-import { validateImportAlias } from "~/utils/validateImportAlias.js";
 
 interface CliFlags {
 	noInstall: boolean;
 	default: boolean;
-	importAlias: string;
+	importSwaggerFilePath: string;
 }
 
 interface CliResults {
@@ -20,11 +21,11 @@ interface CliResults {
 }
 
 const defaultOptions: CliResults = {
-	packages: ["kubb"],
+	packages: ["kubbAxios", "kubbTanstack"],
 	flags: {
 		noInstall: false,
 		default: false,
-		importAlias: "~/",
+		importSwaggerFilePath: "./openapi.yaml",
 	},
 };
 
@@ -42,12 +43,12 @@ export const runCli = async (): Promise<CliResults> => {
 		)
 		/** @experimental - Used for CI E2E tests. Used in conjunction with `--CI` to skip prompting. */
 		.option(
-			"-i, --import-alias",
+			"-i, --import-swagger",
 			"Explicitly tell the CLI to use a custom import alias",
-			defaultOptions.flags.importAlias
+			defaultOptions.flags.importSwaggerFilePath
 		)
 		/** END CI-FLAGS */
-		.version(await getVersion(), "-v, --version", "Display the version number")
+		.version(getVersion(), "-v, --version", "Display the version number")
 		.parse(process.argv);
 
 	// FIXME: TEMPORARY WARNING WHEN USING YARN 3. SEE ISSUE #57
@@ -77,14 +78,20 @@ export const runCli = async (): Promise<CliResults> => {
 
 		const pkgManager = getUserPkgManager();
 
+		//scegli il config (installa i pachetti e importa file e cartelle)
+		//runna lo script per validare il file swagger yaml
+		//runna kubb
+
 		const project = await p.group(
 			{
 				runKubb: () => {
-					return p.text({
-						message: "Importing kubb config",
-						defaultValue: defaultOptions.flags.importAlias,
-						placeholder: defaultOptions.flags.importAlias,
-						validate: validateImportAlias,
+					return p.select({
+						message: "What kubb config would you like to use?",
+						options: [
+							{ value: "axios", label: "Axios" },
+							{ value: "tanstack-query", label: "Tanstack-query" },
+						],
+						initialValue: "tanstack-query",
 					});
 				},
 				...(!cliResults.flags.noInstall && {
@@ -95,12 +102,11 @@ export const runCli = async (): Promise<CliResults> => {
 						});
 					},
 				}),
-				importAlias: () => {
+				importSwaggerFilePath: () => {
 					return p.text({
-						message: "What import alias would you like to use?",
-						defaultValue: defaultOptions.flags.importAlias,
-						placeholder: defaultOptions.flags.importAlias,
-						validate: validateImportAlias,
+						message: "Indicate the path to the swagger file",
+						defaultValue: defaultOptions.flags.importSwaggerFilePath,
+						placeholder: defaultOptions.flags.importSwaggerFilePath,
 					});
 				},
 			},
@@ -112,14 +118,14 @@ export const runCli = async (): Promise<CliResults> => {
 		);
 
 		const packages: AvailablePackages[] = [];
-		if (project.runKubb) packages.push("kubb");
+		if (project.runKubb) packages.push("kubbAxios", "kubbTanstack");
 
 		return {
 			packages,
 			flags: {
 				...cliResults.flags,
 				noInstall: !project.install || cliResults.flags.noInstall,
-				importAlias: project.importAlias ?? cliResults.flags.importAlias,
+				importSwaggerFilePath: project.importSwaggerFilePath ?? cliResults.flags.importSwaggerFilePath,
 			},
 		};
 	} catch (err) {

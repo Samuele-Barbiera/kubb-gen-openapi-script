@@ -119,15 +119,9 @@ export async function processOpenApiDocument(openApiFilePath: string, blacklistF
 		console.log("OpenAPI document processed. Unmatched path parameters removed.");
 
 		// Remove blacklisted parameters from the OpenAPI document
-		await removeBlacklistedParameters(blacklistFileConfigPath, "path_to_your_openapi_updated.yaml");
+		await removeBlacklistedParameters(blacklistFileConfigPath, "openapi_updated.yaml");
 	} catch (error) {
 		console.error("An error occurred:", error);
 	}
 }
 
-// // Update the paths to your OpenAPI YAML file and blacklist JSON file
-// const openApiFilePath = "path_to_your_openapi.yaml";
-// const blacklistFileConfigPath = "./script.config.json";
-
-// // Process the OpenAPI document
-// processOpenApiDocument(openApiFilePath, blacklistFileConfigPath);

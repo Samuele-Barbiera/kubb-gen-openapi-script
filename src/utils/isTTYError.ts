@@ -1,5 +1,6 @@
 export class IsTTYError extends Error {
-  constructor(msg: string) {
-    super(msg);
-  }
+	// biome-ignore lint/complexity/noUselessConstructor: <explanation>
+	constructor(msg: string) {
+		super(msg);
+	}
 }

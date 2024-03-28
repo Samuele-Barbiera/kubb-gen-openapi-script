@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import { getUserPkgManager } from "~/utils/getUserPkgManager.js";
 
 export const renderTitle = () => {
@@ -6,4 +7,6 @@ export const renderTitle = () => {
 	if (pkgManager === "yarn" || pkgManager === "pnpm") {
 		console.log("");
 	}
+
+	console.log(chalk.redBright("a Typescript project is required to run this cli!"));
 };

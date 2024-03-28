@@ -7,7 +7,6 @@ import fs from "fs-extra";
 import { runCli } from "~/cli/index.js";
 import { createProject } from "~/helpers/createProject.js";
 import { logNextSteps } from "~/helpers/logNextSteps.js";
-import { setImportAlias } from "~/helpers/setImportAlias.js";
 import { buildPkgInstallerMap } from "~/installers/index.js";
 import { getUserPkgManager } from "~/utils/getUserPkgManager.js";
 import { logger } from "~/utils/logger.js";
@@ -24,24 +23,26 @@ type KubbSwaggerCliPackageJSON = PackageJson & {
 
 const main = async () => {
 	const pkgManager = getUserPkgManager();
-	console.log("🚀 ~ main ~ pkgManager:", pkgManager);
+	const npmVersion = await getNpmVersion();
 	renderTitle();
+	npmVersion && renderVersionWarning(npmVersion);
 
 	const {
-		flags: { noInstall, importAlias },
+		packages,
+		flags: { noInstall, importSwaggerFilePath },
 	} = await runCli();
 
-	const usePackages = buildPkgInstallerMap();
+	const usePackages = buildPkgInstallerMap(packages);
 
 	const projectDir = await createProject({
 		packages: usePackages,
-		importAlias,
+
 		noInstall,
 	});
 
 	// Write name to package.json
 	const pkgJson = fs.readJSONSync(path.join(projectDir, "package.json")) as KubbSwaggerCliPackageJSON;
-	pkgJson.cKubbSwaggerCliaMetadata = { initVersion: await getVersion() };
+	pkgJson.cKubbSwaggerCliaMetadata = { initVersion: getVersion() };
 
 	// ? Bun doesn't support this field (yet)
 	if (pkgManager !== "bun") {
@@ -54,11 +55,6 @@ const main = async () => {
 	fs.writeJSONSync(path.join(projectDir, "package.json"), pkgJson, {
 		spaces: 2,
 	});
-
-	// update import alias in any generated files if not using the default
-	if (importAlias !== "~/") {
-		setImportAlias(projectDir, importAlias);
-	}
 
 	if (!noInstall) {
 		await installDependencies({ projectDir });
