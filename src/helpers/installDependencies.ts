@@ -16,7 +16,7 @@ const execWithSpinner = async (
 ) => {
 	const { onDataHandle, args = ["install"], stdout = "pipe" } = options;
 
-	const spinner = ora(`Running ${pkgManager} install...`).start();
+	const spinner = ora({ text: `Running ${pkgManager} install...`, discardStdin: false }).start();
 	const subprocess = execa(pkgManager, args, { cwd: projectDir, stdout });
 
 	await new Promise<void>((res, rej) => {
@@ -71,10 +71,12 @@ export const installDependencies = async ({
 }) => {
 	logger.info("Installing dependencies...");
 	const pkgManager = getUserPkgManager();
+	console.log("🚀 ~ pkgManager:", pkgManager);
 
 	const installSpinner = await runInstallCommand(pkgManager, projectDir);
+	console.log("🚀 ~ installSpinner:", installSpinner);
 
 	// If the spinner was used to show the progress, use succeed method on it
 	// If not, use the succeed on a new spinner
-	(installSpinner ?? ora()).succeed(chalk.green("Successfully installed dependencies!\n"));
+	(installSpinner ?? ora({ discardStdin: false })).succeed(chalk.green("Successfully installed dependencies!\n"));
 };

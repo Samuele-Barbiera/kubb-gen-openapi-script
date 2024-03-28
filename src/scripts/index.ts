@@ -1,5 +1,6 @@
 import * as yaml from "js-yaml";
 import type { BlackListData, OpenApiDocument, Parameter } from "../../types";
+import fs from "fs-extra";
 
 /**
  * This script loads an OpenAPI document from a YAML file, processes it by removing unmatched path parameters,
@@ -12,7 +13,7 @@ import type { BlackListData, OpenApiDocument, Parameter } from "../../types";
  * @returns The loaded OpenAPI document.
  */
 export async function loadOpenApiDocument(filePath: string): Promise<OpenApiDocument> {
-	const fileContent = await Bun.file(filePath).text();
+	const fileContent = await fs.readFile(filePath, "utf8");
 	return yaml.load(fileContent) as OpenApiDocument;
 }
 
@@ -23,7 +24,7 @@ export async function loadOpenApiDocument(filePath: string): Promise<OpenApiDocu
  */
 async function saveOpenApiDocument(filePath: string, document: OpenApiDocument): Promise<void> {
 	const yamlStr = yaml.dump(document, { noRefs: true, lineWidth: -1 });
-	await Bun.write(filePath, yamlStr);
+	await fs.writeFile(filePath, yamlStr);
 }
 
 /**
@@ -54,9 +55,9 @@ function processDocument(document: OpenApiDocument): OpenApiDocument {
  * @param filePath - The path to the JSON file.
  * @returns The loaded blacklist data.
  */
-async function loadBlackListData(filePath: string): Promise<BlackListData> {
-	const file = Bun.file(filePath);
-	const data = await file.json();
+function loadBlackListData(filePath: string): BlackListData {
+	const file = fs.readFileSync(filePath, "utf8");
+	const data = JSON.parse(file);
 	return data as BlackListData;
 }
 
@@ -68,8 +69,8 @@ async function loadBlackListData(filePath: string): Promise<BlackListData> {
  */
 async function removeBlacklistedParameters(blacklistFileConfigPath: string, yamlFilePath: string): Promise<void> {
 	// Load the blacklist data from a JSON file
-	const loadBlackListJson = await loadBlackListData(blacklistFileConfigPath);
-	const yamlContent = await Bun.file(yamlFilePath).text();
+	const loadBlackListJson = loadBlackListData(blacklistFileConfigPath);
+	const yamlContent = await fs.readFile(yamlFilePath, "utf8");
 	const document = yaml.load(yamlContent) as unknown as {
 		paths: Record<
 			string,
@@ -95,7 +96,7 @@ async function removeBlacklistedParameters(blacklistFileConfigPath: string, yaml
 
 	// Convert the document back to a YAML string and save it
 	const updatedYamlContent = yaml.dump(document);
-	await Bun.write(yamlFilePath, updatedYamlContent);
+	await fs.writeFile(yamlFilePath, updatedYamlContent);
 
 	console.log("Parameters removed successfully.");
 }

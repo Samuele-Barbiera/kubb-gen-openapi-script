@@ -19,13 +19,14 @@
 	"scripts": {
 		"build": "tsup",
 		"clean": "rm -rf dist  node_modules",
-		"commit": "git add . && npx cz  && git pull",
+		"commit": "git add . && pnpm dlx cz  && git pull",
 		"dev": "tsup --watch",
-		"preinstall": "npx only-allow bun",
-		"lint": "bunx tsc",
-		"release": "cd cli && bun run build && cd .. && changeset && changeset version && changeset publish",
+		"lint": "pnpm dlx tsc",
+		"preinstall": "npx only-allow pnpm",
+		"release": "cd cli && pnpm run build && cd .. && changeset && changeset version && changeset publish",
 		"start": "node dist/index.js",
-		"update-deps": "bunx npm-check-updates -i --format group -u && bun i"
+		"check": "bunx @biomejs/biome check --apply-unsafe .",
+		"update-deps": "pnpm dlx npm-check-updates -i --format group -u && pnpm i"
 	},
 	"config": {
 		"commitizen": {
@@ -51,7 +52,7 @@
 		"fs-extra": "^11.2.0",
 		"gradient-string": "^2.0.2",
 		"js-yaml": "^4.1.0",
-		"ora": "6.3.1",
+		"ora": "8.0.1",
 		"react": "^18.2.0",
 		"sort-package-json": "^2.9.0",
 		"tsup": "^8.0.2"
@@ -62,7 +63,6 @@
 		"@kubb/swagger": "^2.11.0",
 		"@kubb/swagger-tanstack-query": "^2.11.0",
 		"@kubb/swagger-ts": "^2.11.0",
-		"@types/bun": "latest",
 		"@types/fs-extra": "^11.0.4",
 		"@types/js-yaml": "^4.0.9",
 		"@types/react": "^18.2.73",
@@ -78,6 +78,6 @@
 		"@Samuele-Barbiera:registry": "https://npm.pkg.github.com"
 	},
 	"cKubbSwaggerCliaMetadata": {
-		"initVersion": "0.0.1"
+		"initVersion": "0.1.0"
 	}
 }

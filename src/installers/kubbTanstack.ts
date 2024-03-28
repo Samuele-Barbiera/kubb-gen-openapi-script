@@ -6,12 +6,6 @@ import { addPackageDependency } from "~/src/utils/addPackageDependency";
 import type { AvailableDependencies } from "~/src/installers/dependencyVersionMap";
 import { PKG_ROOT } from "~/consts";
 
-const getKubbConfig = () => {
-	const kubbTanstackConfig = fs.readFileSync("~/../templates/config/tanstack-query/kubb.config");
-
-	return kubbTanstackConfig;
-};
-
 export const dynamicKubbTanstackInstaller: Installer = ({ projectDir, packages }) => {
 	const deps: AvailableDependencies[] = [
 		"@kubb/swagger-tanstack-query",
@@ -25,19 +19,16 @@ export const dynamicKubbTanstackInstaller: Installer = ({ projectDir, packages }
 		dependencies: deps,
 		devMode: false,
 	});
+	console.log("🚀 ~ devMode:");
 
-	const tanstackKubbDir = path.join(PKG_ROOT, "~/../templates/tanstack-query/");
+	const sourceTemplatesDir = path.join(projectDir, "templatesSDK");
 
-	path.join(tanstackKubbDir, "./");
-	const sourceDirectory = path.join(tanstackKubbDir, "./");
-	const destinationDirectory = path.join(__dirname, "./");
+	const tanstackKubbDir = path.join(projectDir, "templates/tanstack-query");
 
-	fs.copy(sourceDirectory, destinationDirectory);
+	fs.copySync(sourceTemplatesDir, tanstackKubbDir);
 
-	const kubbTanstackConfig = getKubbConfig();
-
-	const kubbTanstackrcFileContents = [`${JSON.stringify(kubbTanstackConfig, null, 2)}`].join("\n");
-
-	const kubbTanstackConfigDest = path.join(projectDir, "kubb.config.ts");
-	fs.writeFileSync(kubbTanstackConfigDest, kubbTanstackrcFileContents, "utf-8");
+	fs.copyFileSync(
+		path.join(PKG_ROOT, "templates/config/tanstack-query/kubb.config.ts"),
+		path.join(projectDir, "kubb.config.ts")
+	);
 };

@@ -17,12 +17,9 @@ export const scaffoldProject = async ({ projectDir, pkgManager, noInstall }: Ins
 		logger.info("");
 	}
 
-	const spinner = ora(`Scaffolding in: ${projectDir}...\n`).start();
+	const spinner = ora({ text: `Scaffolding in: ${projectDir}...\n`, discardStdin: false }).start();
 
 	spinner.start();
 
-	const templatesDir = path.join(projectDir, "templatesss");
-	fs.copySync(srcDir, templatesDir);
-
-	// spinner.succeed(`${chalk.green("scaffolded successfully!")}\n`);
+	spinner.succeed(`${chalk.green("scaffolded successfully!")}\n`);
 };

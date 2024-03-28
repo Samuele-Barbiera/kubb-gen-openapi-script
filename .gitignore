@@ -178,3 +178,6 @@ path_to_your_openapi.yaml
 templatesss/mutate/index.tsx
 templatesss/operations/index.tsx
 templatesss/queryKey/index.tsx
+templatesSDK/mutate/index.tsx
+templatesSDK/operations/index.tsx
+templatesSDK/queryKey/index.tsx
