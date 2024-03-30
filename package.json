@@ -1,5 +1,5 @@
 {
-	"name": "gen-sdk-api",
+	"name": "@samuele-barbiera-oncode/gen-sdk-api",
 	"version": "0.1.2",
 	"keywords": [
 		"gen-sdk-api",
@@ -11,7 +11,7 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Samuele-Barbiera/kubb-gen-scribe-cli.git"
+		"url": "git+https://github.com/Samuele-Barbiera/kubb-gen-scribe-cli.git"
 	},
 	"license": "MIT",
 	"type": "module",
@@ -20,7 +20,7 @@
 	"module": "dist/index.mjs",
 	"types": "dist/index.d.ts",
 	"bin": {
-		"gen-sdk-api": "./dist/index.js"
+		"gen-sdk-api": "dist/index.js"
 	},
 	"files": [
 		"dist",

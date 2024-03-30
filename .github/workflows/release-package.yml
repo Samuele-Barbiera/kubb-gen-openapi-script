@@ -43,7 +43,7 @@ jobs:
           echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> ./.npmrc
 
       - run: npm publish
-        working-directory: ./dist
+        working-directory: ./
 
       - name: Create Version PR or Publish to NPM
         id: changesets
