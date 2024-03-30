@@ -1,6 +1,6 @@
 {
   "name": "gen-sdk-api",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "keywords": [
     "gen-sdk-api",
     "init.tips",
@@ -34,7 +34,7 @@
     "build": "tsup",
     "check": "pnpm dlx @biomejs/biome check --apply-unsafe .",
     "clean": "rm -rf dist  node_modules",
-    "commit": "git add . && pnpm cz  && git pull",
+    "commit": "git add . && pnpm cz  && git pull && git push",
     "dev": "tsup --watch",
     "preinstall": "npx only-allow pnpm",
     "lint": "pnpm  tsc",

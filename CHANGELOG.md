@@ -1,5 +1,11 @@
 # @gen-sdk-api/root
 
+## 0.3.1
+
+### Patch Changes
+
+- trying to fix the dir placement from the cli to the projectDir
+
 ## 0.3.0
 
 ### Minor Changes
