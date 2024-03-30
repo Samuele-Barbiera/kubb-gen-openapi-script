@@ -37,14 +37,7 @@ jobs:
 
       - name: Build the package
         run: pnpm build
-
-      - run: |
-          echo @Samuele-Barbiera:https://npm.pkg.github.com/ > ./.npmrc
-      - run: npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"     
-      
-      - run: npm publish
-        working-directory: ./
-
+        
       - name: Create Version PR or Publish to NPM
         id: changesets
         uses: changesets/action@v1.4.1
