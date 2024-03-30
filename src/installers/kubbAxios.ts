@@ -15,8 +15,11 @@ export const dynamicKubbAxiosInstaller: Installer = ({ projectDir, packages }) =
 		devMode: false,
 	});
 
-	const sourceTemplatesDir = path.join(PKG_ROOT, "templates/axios");
-	fs.copySync(sourceTemplatesDir, path.join(projectDir, "templatesSDK/client"));
+	const appFileDir = path.join(PKG_ROOT, "templates/axios");
+
+	const appSrc = path.join(appFileDir, "templatesSDK/client");
+	const appDest = path.join(projectDir, "templatesSDK/client");
+	fs.copySync(appSrc, appDest);
 
 	const axiosFileContent = [
 		"import { defineConfig } from '@kubb/core';",
