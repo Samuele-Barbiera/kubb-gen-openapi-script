@@ -1,14 +1,7 @@
 {
-	"name": "@samuele-barbiera-oncode/gen-sdk-api",
+	"name": "gen-sdk-api",
 	"version": "0.1.2",
-	"keywords": [
-		"gen-sdk-api",
-		"init.tips",
-		"kubb-gen",
-		"scribe",
-		"openapi",
-		"typescript"
-	],
+	"keywords": ["gen-sdk-api", "init.tips", "kubb-gen", "scribe", "openapi", "typescript"],
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/Samuele-Barbiera/kubb-gen-scribe-cli.git"
@@ -22,14 +15,7 @@
 	"bin": {
 		"gen-sdk-api": "dist/index.js"
 	},
-	"files": [
-		"dist",
-		"template",
-		"README.md",
-		"LICENSE",
-		"CHANGELOG.md",
-		"package.json"
-	],
+	"files": ["dist", "template", "README.md", "LICENSE", "CHANGELOG.md", "package.json"],
 	"scripts": {
 		"build": "tsup",
 		"check": "pnpm dlx @biomejs/biome check --apply-unsafe .",
