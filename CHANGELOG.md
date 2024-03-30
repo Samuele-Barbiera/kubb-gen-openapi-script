@@ -1,4 +1,4 @@
-# @kubb-gen-scribe-cli/root
+# @gen-sdk-api/root
 
 ## 0.1.0
 

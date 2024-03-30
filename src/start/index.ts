@@ -1,6 +1,6 @@
 import * as p from "@clack/prompts";
 import { Command } from "commander";
-import { execa } from "execa";
+import figlet from "figlet";
 import { CREATE_SDK_CLI } from "~/consts.js";
 import type { AvailablePackages } from "~/src/installers/index.js";
 import { getVersion } from "~/src/utils/getKubbSwaggerCliVersion.js";
@@ -24,40 +24,22 @@ const defaultOptions: CliResults = {
 	flags: {
 		noInstall: false,
 		default: false,
-		importSwaggerFilePath: "./openapi.yaml",
+		importSwaggerFilePath: "./api.yaml",
 	},
 };
 
 export const runCli = async (): Promise<CliResults> => {
+	console.log(figlet.textSync("kubb gen scribe"));
 	const cliResults = defaultOptions;
-
-	const program = new Command()
-		.name(CREATE_SDK_CLI)
-		.description("A CLI for generating kubb hooks from a swagger file")
-		.option("--noInstall", "Explicitly tell the CLI to not run the package manager's install command", false)
-		.option(
-			"-y, --default",
-			"Bypass the CLI and use all default options to bootstrap the Generated SDKs for all your APIs ",
-			false
-		)
-		/** @experimental - Used for CI E2E tests. Used in conjunction with `--CI` to skip prompting. */
-		.option(
-			"-i, --import-swagger",
-			"Explicitly tell the CLI to use a custom path to the swagger file. Default is './openapi.yaml",
-			defaultOptions.flags.importSwaggerFilePath
-		)
-		/** END CI-FLAGS */
-		.version(getVersion(), "-v, --version", "Display the version number")
-		.parse(process.argv);
 
 	// FIXME: TEMPORARY WARNING WHEN USING YARN 3. SEE ISSUE #57
 	if (process.env.npm_config_user_agent?.startsWith("yarn/3")) {
 		logger.warn(`  WARNING: It looks like you are using Yarn 3. This is currently not supported,
-  and likely to result in a crash. Please run kubb-gen-scribe-cli with another
+  and likely to result in a crash. Please run gen-sdk-api with another
   package manager such as pnpm, npm, or Yarn Classic.`);
 	}
 
-	cliResults.flags = program.opts();
+	// cliResults.flags = program.opts();
 
 	if (cliResults.flags.default) {
 		return cliResults;
@@ -104,8 +86,9 @@ export const runCli = async (): Promise<CliResults> => {
 				importSwaggerFilePath: () => {
 					return p.text({
 						message: "Indicate the path to the swagger file",
-						defaultValue: defaultOptions.flags.importSwaggerFilePath,
-						placeholder: defaultOptions.flags.importSwaggerFilePath,
+						defaultValue: cliResults.flags.importSwaggerFilePath,
+						placeholder: cliResults.flags.importSwaggerFilePath,
+						initialValue: defaultOptions.flags.importSwaggerFilePath,
 					});
 				},
 			},
@@ -117,13 +100,12 @@ export const runCli = async (): Promise<CliResults> => {
 		);
 
 		const packages: AvailablePackages[] = [];
-		console.log("🚀 ~ runCli ~ packages:", project.runKubb);
+
 		if (project.runKubb === "tanstack-query") {
 			packages.push("kubbTanstack");
 		} else {
 			packages.push("kubbAxios");
 		}
-		console.log("🚀 ~ runCli ~ packages:", packages);
 
 		return {
 			packages,
@@ -134,7 +116,7 @@ export const runCli = async (): Promise<CliResults> => {
 			},
 		};
 	} catch (err) {
-		// If the user is not calling kubb-gen-scribe-cli from an interactive terminal, inquirer will throw an IsTTYError
+		// If the user is not calling gen-sdk-api from an interactive terminal, inquirer will throw an IsTTYError
 		// If this happens, we catch the error, tell the user what has happened, and then continue to run the program
 		if (err instanceof IsTTYError) {
 			logger.warn(`

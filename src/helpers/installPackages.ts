@@ -10,7 +10,6 @@ type InstallPackagesOptions = InstallerOptions & {
 // This runs the installer for all the packages that the user has selected
 export const installPackages = (options: InstallPackagesOptions) => {
 	const { packages } = options;
-	console.log("🚀 ~ installPackages ~ options:", options);
 	logger.info("Adding boilerplate...");
 
 	for (const [name, pkgOpts] of Object.entries(packages)) {

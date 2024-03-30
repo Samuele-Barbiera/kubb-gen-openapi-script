@@ -14,9 +14,9 @@ const execWithSpinner = async (
 		onDataHandle?: (spinner: Ora) => (data: Buffer) => void;
 	}
 ) => {
-	const { onDataHandle, args = ["install"], stdout = "pipe" } = options;
+	const { onDataHandle, args = ["kubb"], stdout = "pipe" } = options;
 
-	const spinner = ora({ text: `Running ${pkgManager} install...`, discardStdin: false }).start();
+	const spinner = ora({ text: `Running ${pkgManager} kubb to generate the APIs...`, discardStdin: false }).start();
 	const subprocess = execa(pkgManager, args, { cwd: projectDir, stdout });
 
 	await new Promise<void>((res, rej) => {
@@ -31,11 +31,11 @@ const execWithSpinner = async (
 	return spinner;
 };
 
-const runInstallCommand = async (pkgManager: PackageManager, projectDir: string): Promise<Ora | null> => {
+const runKubbGenCommand = async (pkgManager: PackageManager, projectDir: string): Promise<Ora | null> => {
 	switch (pkgManager) {
 		// When using npm, inherit the stderr stream so that the progress bar is shown
 		case "npm":
-			await execa(pkgManager, ["install"], {
+			await execa(pkgManager, ["kubb"], {
 				cwd: projectDir,
 				stderr: "inherit",
 			});
@@ -64,17 +64,17 @@ const runInstallCommand = async (pkgManager: PackageManager, projectDir: string)
 	}
 };
 
-export const installDependencies = async ({
+export const kubbGenCommand = async ({
 	projectDir,
 }: {
 	projectDir: string;
 }) => {
-	logger.info("Installing dependencies...");
+	logger.info("Creating the APIs hooks...");
 	const pkgManager = getUserPkgManager();
 
-	const installSpinner = await runInstallCommand(pkgManager, projectDir);
-	
+	const installSpinner = await runKubbGenCommand(pkgManager, projectDir);
+
 	// If the spinner was used to show the progress, use succeed method on it
 	// If not, use the succeed on a new spinner
-	(installSpinner ?? ora({ discardStdin: false })).succeed(chalk.green("Successfully installed dependencies!\n"));
+	(installSpinner ?? ora({ discardStdin: false })).succeed(chalk.green("Successfully created the apis!\n"));
 };

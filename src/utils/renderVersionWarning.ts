@@ -8,13 +8,13 @@ export const renderVersionWarning = (npmVersion: string) => {
 	const currentVersion = getVersion();
 
 	if (currentVersion.includes("beta")) {
-		logger.warn("  You are using a beta version of kubb-gen-scribe-cli.");
+		logger.warn("  You are using a beta version of gen-sdk-api.");
 		logger.warn("  Please report any bugs you encounter.");
 	} else if (currentVersion.includes("next")) {
-		logger.warn("  You are running kubb-gen-scribe-cli with the @next tag which is no longer maintained.");
+		logger.warn("  You are running gen-sdk-api with the @next tag which is no longer maintained.");
 		logger.warn("  Please run the CLI with @latest instead.");
 	} else if (currentVersion !== npmVersion) {
-		logger.warn("  You are using an outdated version of kubb-gen-scribe-cli.");
+		logger.warn("  You are using an outdated version of gen-sdk-api.");
 		logger.warn("  Your version:", `${currentVersion}.`, "Latest version in the npm registry:", npmVersion);
 		logger.warn("  Please run the CLI with @latest to get the latest updates.");
 	}
@@ -58,7 +58,7 @@ export const getNpmVersion = () =>
 	// `fetch` to the registry is faster than `npm view` so we try that first
 	checkForLatestVersion().catch(() => {
 		try {
-			return execSync("npm view kubb-gen-scribe-cli version").toString().trim();
+			return execSync("npm view gen-sdk-api version").toString().trim();
 		} catch {
 			return null;
 		}

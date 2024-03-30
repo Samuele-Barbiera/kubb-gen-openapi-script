@@ -11,6 +11,7 @@ export interface InstallerOptions {
 	projectDir: string;
 	pkgManager: PackageManager;
 	noInstall: boolean;
+	importSwaggerFilePath?: string;
 	packages?: PkgInstallerMap;
 }
 
@@ -23,7 +24,10 @@ export type PkgInstallerMap = {
 	};
 };
 
-export const buildPkgInstallerMap = (packages: AvailablePackages[]): PkgInstallerMap => ({
+export const buildPkgInstallerMap = (
+	packages: AvailablePackages[],
+	importSwaggerFilePath: string
+): PkgInstallerMap => ({
 	kubbAxios: {
 		inUse: packages.includes("kubbAxios"),
 		installer: dynamicKubbAxiosInstaller,

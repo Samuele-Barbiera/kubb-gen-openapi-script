@@ -2,7 +2,6 @@ import path from "node:path";
 
 import { installPackages } from "~/src/helpers/installPackages.js";
 import { scaffoldProject } from "~/src/helpers/scaffoldProject";
-import { selectAppFile, selectIndexFile } from "~/src/helpers/selectBoilerplate.js";
 import type { PkgInstallerMap } from "~/src/installers/index.js";
 import { getUserPkgManager } from "~/src/utils/getUserPkgManager.js";
 
@@ -29,9 +28,6 @@ export const createSdkApi = async ({ packages, noInstall }: CreateSdkApiOptions)
 		packages,
 		noInstall,
 	});
-
-	selectAppFile({ projectDir, packages });
-	selectIndexFile({ projectDir, packages });
 
 	return projectDir;
 };

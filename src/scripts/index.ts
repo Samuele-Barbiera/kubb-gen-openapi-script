@@ -1,6 +1,7 @@
 import * as yaml from "js-yaml";
 import type { BlackListData, OpenApiDocument, Parameter } from "../../types";
 import fs from "fs-extra";
+import { logger } from "~/src/utils/logger";
 
 /**
  * This script loads an OpenAPI document from a YAML file, processes it by removing unmatched path parameters,
@@ -98,7 +99,7 @@ async function removeBlacklistedParameters(blacklistFileConfigPath: string, yaml
 	const updatedYamlContent = yaml.dump(document);
 	await fs.writeFile(yamlFilePath, updatedYamlContent);
 
-	console.log("Parameters removed successfully.");
+	logger.info("Parameters removed successfully.");
 }
 
 /**
@@ -106,7 +107,8 @@ async function removeBlacklistedParameters(blacklistFileConfigPath: string, yaml
  * @param openApiFilePath - The path to the OpenAPI YAML file.
  * @param blacklistFileConfigPath - The path to the blacklist JSON file.
  */
-export async function processOpenApiDocument(openApiFilePath: string, blacklistFileConfigPath: string): Promise<void> {
+export async function processOpenApiDocument(openApiFilePath: string, blacklistFileConfigPath?: string): Promise<void> {
+	console.log("🚀 ~ processOpenApiDocument ~ openApiFilePath:", openApiFilePath);
 	try {
 		// Load the OpenAPI document from a YAML file
 		const openApiDocument = await loadOpenApiDocument(openApiFilePath);
@@ -117,10 +119,10 @@ export async function processOpenApiDocument(openApiFilePath: string, blacklistF
 		// Save the updated OpenAPI document as a new YAML file
 		await saveOpenApiDocument(openApiFilePath.replace(".yaml", "_updated.yaml"), updatedDocument);
 
-		console.log("OpenAPI document processed. Unmatched path parameters removed.");
+		logger.info("OpenAPI document processed. Unmatched path parameters removed.");
 
 		// Remove blacklisted parameters from the OpenAPI document
-		await removeBlacklistedParameters(blacklistFileConfigPath, "openapi_updated.yaml");
+		if (blacklistFileConfigPath) await removeBlacklistedParameters(blacklistFileConfigPath, "openapi_updated.yaml");
 	} catch (error) {
 		console.error("An error occurred:", error);
 	}

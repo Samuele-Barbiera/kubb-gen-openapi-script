@@ -6,7 +6,6 @@ import type { PackageJson } from "type-fest";
 import fs from "fs-extra";
 import { runCli } from "~/src/start/index.js";
 import { createSdkApi } from "~/src/helpers/createSdkApi.js";
-import { logNextSteps } from "~/src/helpers/logNextSteps.js";
 import { buildPkgInstallerMap } from "~/src/installers/index.js";
 import { getUserPkgManager } from "~/src/utils/getUserPkgManager.js";
 import { logger } from "~/src/utils/logger.js";
@@ -14,6 +13,10 @@ import { renderTitle } from "~/src/utils/renderTitle.js";
 import { installDependencies } from "~/src/helpers/installDependencies.js";
 import { getVersion } from "~/src/utils/getKubbSwaggerCliVersion.js";
 import { getNpmVersion, renderVersionWarning } from "~/src/utils/renderVersionWarning.js";
+import { processOpenApiDocument } from "~/src/scripts";
+import ora from "ora";
+import chalk from "chalk";
+import { kubbGenCommand } from "~/src/helpers/runKubbGen";
 
 type KubbSwaggerCliPackageJSON = PackageJson & {
 	cKubbSwaggerCliaMetadata?: {
@@ -32,11 +35,10 @@ const main = async () => {
 		flags: { noInstall, importSwaggerFilePath },
 	} = await runCli();
 
-	const usePackages = buildPkgInstallerMap(packages);
+	const usePackages = buildPkgInstallerMap(packages, importSwaggerFilePath);
 
 	const projectDir = await createSdkApi({
 		packages: usePackages,
-
 		noInstall,
 	});
 
@@ -60,11 +62,15 @@ const main = async () => {
 		await installDependencies({ projectDir });
 	}
 
-	await logNextSteps({
-		packages: usePackages,
-		noInstall,
-		projectDir,
-	});
+	const spinner = ora({
+		text: `Running the schema validation for this file ${importSwaggerFilePath}...`,
+		discardStdin: false,
+	}).start();
+	await processOpenApiDocument(importSwaggerFilePath);
+
+	spinner.succeed(chalk.green("Conversion and check of the swagger schema done"));
+
+	await kubbGenCommand({ projectDir });
 
 	process.exit(0);
 };
@@ -75,7 +81,7 @@ main().catch(err => {
 		logger.error(err);
 	} else {
 		logger.error("An unknown error has occurred. Please open an issue on github with the below:");
-		console.log(err);
+		logger.error(err);
 	}
 	process.exit(1);
 });

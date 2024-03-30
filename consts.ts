@@ -5,7 +5,6 @@ import { fileURLToPath } from "node:url";
 // Path is in relation to a single index.js file inside ./dist
 const __filename = fileURLToPath(import.meta.url);
 const distPath = path.dirname(__filename);
-console.log("🚀 ~ distPath:", distPath);
 export const PKG_ROOT = path.join(distPath, "../");
 
-export const CREATE_SDK_CLI = "kubb-gen-scribe-cli";
+export const CREATE_SDK_CLI = "gen-sdk-api";

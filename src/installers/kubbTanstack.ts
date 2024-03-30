@@ -19,7 +19,6 @@ export const dynamicKubbTanstackInstaller: Installer = ({ projectDir, packages }
 		dependencies: deps,
 		devMode: false,
 	});
-	console.log("🚀 ~ devMode:");
 
 	const sourceTemplatesDir = path.join(projectDir, "templatesSDK");
 

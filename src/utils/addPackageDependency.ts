@@ -10,7 +10,6 @@ export const addPackageDependency = (opts: {
 	projectDir: string;
 }) => {
 	const { dependencies, devMode, projectDir } = opts;
-	console.log("🚀 ~ opts:", opts);
 
 	const pkgJson = fs.readJSONSync(path.join(projectDir, "package.json")) as PackageJson;
 
@@ -24,7 +23,6 @@ export const addPackageDependency = (opts: {
 		}
 	}
 	const sortedPkgJson = sortPackageJson(pkgJson);
-	console.log("🚀 ~ sortedPkgJson:", path.join(projectDir, "package.json"));
 
 	fs.writeJSONSync(path.join(projectDir, "package.json"), sortedPkgJson, {
 		spaces: 2,
