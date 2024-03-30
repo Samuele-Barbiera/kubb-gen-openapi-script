@@ -1,13 +1,11 @@
 import path from "node:path";
 
 import fs from "fs-extra";
-import type { Installer } from "~/src/installers/index.js";
 import type { AvailableDependencies } from "~/src/installers/dependencyVersionMap";
+import type { Installer } from "~/src/installers/index.js";
 import { addPackageDependency } from "~/src/utils/addPackageDependency";
-import { PKG_ROOT } from "~/consts";
 
-export const dynamicKubbAxiosInstaller: Installer = ({ projectDir, importSwaggerFilePath }) => {
-	console.log("🚀 ~ projectDir, importSwaggerFilePath:", projectDir, importSwaggerFilePath);
+export const dynamicKubbAxiosInstaller: Installer = ({ projectDir, packages }) => {
 	const deps: AvailableDependencies[] = ["@kubb/core", "@kubb/swagger-ts", "@kubb/swagger"];
 
 	addPackageDependency({
@@ -16,8 +14,76 @@ export const dynamicKubbAxiosInstaller: Installer = ({ projectDir, importSwagger
 		devMode: false,
 	});
 
-	fs.copyFileSync(
-		path.join(PKG_ROOT, "templates/config/axios/kubb.config.ts"),
-		path.join(projectDir, "kubb.config.ts")
-	);
+	const sourceTemplatesDir = path.join(projectDir, "templatesSDK");
+
+	const tanstackKubbDir = path.join(projectDir, "templates/axios");
+
+	fs.copySync(tanstackKubbDir, sourceTemplatesDir);
+
+	const axiosFileContent = [
+		"import { defineConfig } from '@kubb/core';",
+		"import createSwaggerClient from '@kubb/swagger-client';",
+		"import createSwaggerTS from '@kubb/swagger-ts';",
+		"import createSwagger from '@kubb/swagger';",
+		"import * as client from './templatesSDK/client'",
+
+		"export default defineConfig(async () => {",
+		"await setTimeout(() => {",
+		"return Promise.resolve(true)",
+		"}, 1000)",
+		"	return {",
+		"root: '.',",
+		"input: {",
+		`path:  '${packages?.kubbAxios.importSwaggerFilePath.replace(".yaml", "_updated.yaml")}'`,
+		"},",
+		"output: {",
+		"path: './api/gen',",
+		"},",
+		"logLevel: 'info',",
+		"plugins: [",
+		"['@kubb/swagger', { output: false, validate: true }],",
+		"[",
+		" '@kubb/swagger-ts',",
+		"{",
+		"output: { path: 'models/ts' },",
+		" group: {",
+		"type: 'tag',",
+		"},",
+		"enumType: 'asPascalConst',",
+		"dateType: 'date',",
+		" },",
+		" ],",
+		"[",
+		"'@kubb/swagger-client',",
+		" {",
+		" output: {",
+		"path: './clients/axios',",
+		" },",
+		" exclude: [",
+		"{",
+		" type: 'tag',",
+		" pattern: 'store',",
+		" },",
+		"],",
+		"group: { type: 'tag', output: './clients/axios/{{tag}}Service' },",
+		"override: [",
+		"{",
+		"type: 'tag',",
+		"pattern: 'user',",
+		"options: {",
+		"templates: {",
+		"client: client.templates,",
+		"},",
+		"},",
+		"},",
+		" ],",
+		"},",
+		"],",
+		"],",
+		"};",
+		"});",
+	].join("\n");
+
+	const kubbAxioConfigDest = path.join(projectDir, "kubb.config.ts");
+	fs.writeFileSync(kubbAxioConfigDest, axiosFileContent, "utf-8");
 };

@@ -5,7 +5,7 @@ import type { FileMeta, PluginOptions } from "@kubb/swagger-tanstack-query";
 import { Operations } from "@kubb/swagger-tanstack-query/components";
 import { useOperationHelpers, useOperations } from "@kubb/swagger/hooks";
 // biome-ignore lint/style/useImportType: <explanation>
-import  React from "react";
+import React from "react";
 
 export const templates = {
 	...Operations.templates,

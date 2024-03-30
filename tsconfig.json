@@ -1,28 +1,28 @@
 {
-  "compilerOptions": {
-    /* Base Options: */
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "target": "es2022",
-    "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
-    "allowJs": true,
-    "resolveJsonModule": true,
-    "moduleDetection": "force",
-    /* Strictness */
-    "baseUrl": "./",
-    "paths": {
-      "~/*": ["./*"]
-    },
-    "checkJs": true,
-    "strict": true,
-    "noUncheckedIndexedAccess": true,
-    /* If NOT transpiling with TypeScript: */
-    "moduleResolution": "Bundler",
-    "module": "ESNext",
-    "noEmit": true,
-    /* If your code runs in the DOM: */
-    "lib": ["es2022", "dom", "dom.iterable"]
-  },
-  "include": ["src", "./tsup.config.ts", "./reset.d.ts", "biome.json", "./index.ts"]
+	"compilerOptions": {
+		/* Base Options: */
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"target": "es2022",
+		"jsx": "react-jsx",
+		"verbatimModuleSyntax": true,
+		"allowJs": true,
+		"resolveJsonModule": true,
+		"moduleDetection": "force",
+		/* Strictness */
+		"baseUrl": "./",
+		"paths": {
+			"~/*": ["./*"]
+		},
+		"checkJs": true,
+		"strict": true,
+		"noUncheckedIndexedAccess": true,
+		/* If NOT transpiling with TypeScript: */
+		"moduleResolution": "Bundler",
+		"module": "ESNext",
+		"noEmit": true,
+		/* If your code runs in the DOM: */
+		"lib": ["es2022", "dom", "dom.iterable"]
+	},
+	"include": ["src", "./tsup.config.ts", "./reset.d.ts", "biome.json", "./index.ts"]
 }

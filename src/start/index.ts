@@ -7,6 +7,7 @@ import { getVersion } from "~/src/utils/getKubbSwaggerCliVersion.js";
 import { getUserPkgManager } from "~/src/utils/getUserPkgManager.js";
 import { IsTTYError } from "~/src/utils/isTTYError.js";
 import { logger } from "~/src/utils/logger.js";
+import { validateImportSwaggerFilePath } from "~/src/utils/validateImportAlias";
 
 interface CliFlags {
 	noInstall: boolean;
@@ -89,6 +90,7 @@ export const runCli = async (): Promise<CliResults> => {
 						defaultValue: cliResults.flags.importSwaggerFilePath,
 						placeholder: cliResults.flags.importSwaggerFilePath,
 						initialValue: defaultOptions.flags.importSwaggerFilePath,
+						validate: validateImportSwaggerFilePath,
 					});
 				},
 			},

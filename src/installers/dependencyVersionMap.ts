@@ -8,5 +8,6 @@ export const dependencyVersionMap = {
 	"@kubb/swagger": "^2.11.0",
 	"@kubb/swagger-tanstack-query": "^2.11.0",
 	"@kubb/swagger-ts": "^2.11.0",
+	"@kubb/react": "2.11.0",
 } as const;
 export type AvailableDependencies = keyof typeof dependencyVersionMap;

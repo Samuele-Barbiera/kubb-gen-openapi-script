@@ -8,5 +8,5 @@ export const renderTitle = () => {
 		console.log("");
 	}
 
-	console.log(chalk.bgRedBright("Typescript code base project is needed to use this cli!"));
+	console.log(chalk.bgRedBright("React Typescript code base project is needed to use this cli!"));
 };

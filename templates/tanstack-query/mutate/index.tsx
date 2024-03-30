@@ -4,7 +4,7 @@ import { File, Function as FunctionKubb, usePluginManager } from "@kubb/react";
 import { Mutation } from "@kubb/swagger-tanstack-query/components";
 import { useGetOperationFile } from "@kubb/swagger/hooks";
 // biome-ignore lint/style/useImportType: <explanation>
-import  React from "react";
+import React from "react";
 
 export const templates = {
 	...Mutation.templates,

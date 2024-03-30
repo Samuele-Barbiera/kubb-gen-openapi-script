@@ -21,6 +21,7 @@ export type PkgInstallerMap = {
 	[pkg in AvailablePackages]: {
 		inUse: boolean;
 		installer: Installer;
+		importSwaggerFilePath: string;
 	};
 };
 
@@ -31,10 +32,12 @@ export const buildPkgInstallerMap = (
 	kubbAxios: {
 		inUse: packages.includes("kubbAxios"),
 		installer: dynamicKubbAxiosInstaller,
+		importSwaggerFilePath,
 	},
 
 	kubbTanstack: {
 		inUse: packages.includes("kubbTanstack"),
 		installer: dynamicKubbTanstackInstaller,
+		importSwaggerFilePath,
 	},
 });

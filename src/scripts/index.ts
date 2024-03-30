@@ -1,7 +1,7 @@
-import * as yaml from "js-yaml";
-import type { BlackListData, OpenApiDocument, Parameter } from "../../types";
 import fs from "fs-extra";
+import * as yaml from "js-yaml";
 import { logger } from "~/src/utils/logger";
+import type { BlackListData, OpenApiDocument, Parameter } from "../../types";
 
 /**
  * This script loads an OpenAPI document from a YAML file, processes it by removing unmatched path parameters,
@@ -108,7 +108,6 @@ async function removeBlacklistedParameters(blacklistFileConfigPath: string, yaml
  * @param blacklistFileConfigPath - The path to the blacklist JSON file.
  */
 export async function processOpenApiDocument(openApiFilePath: string, blacklistFileConfigPath?: string): Promise<void> {
-	console.log("🚀 ~ processOpenApiDocument ~ openApiFilePath:", openApiFilePath);
 	try {
 		// Load the OpenAPI document from a YAML file
 		const openApiDocument = await loadOpenApiDocument(openApiFilePath);

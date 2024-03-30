@@ -4,10 +4,11 @@
 		"enabled": true
 	},
 	"files": {
-		"ignore": ["src/routeTree.gen.ts"]
+		"ignore": ["./templates/axios/client.ts", "./dist/index.js"]
 	},
 	"linter": {
 		"enabled": true,
+		"ignore": ["./templates/axios/client.ts", "./dist/index.js"],
 		"rules": {
 			"recommended": true,
 			"suspicious": {

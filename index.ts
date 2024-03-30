@@ -3,20 +3,20 @@ import path from "node:path";
 import { execa } from "execa";
 import type { PackageJson } from "type-fest";
 
+import chalk from "chalk";
 import fs from "fs-extra";
-import { runCli } from "~/src/start/index.js";
+import ora from "ora";
 import { createSdkApi } from "~/src/helpers/createSdkApi.js";
+import { installDependencies } from "~/src/helpers/installDependencies.js";
+import { kubbGenCommand } from "~/src/helpers/runKubbGen";
 import { buildPkgInstallerMap } from "~/src/installers/index.js";
+import { processOpenApiDocument } from "~/src/scripts";
+import { runCli } from "~/src/start/index.js";
+import { getVersion } from "~/src/utils/getKubbSwaggerCliVersion.js";
 import { getUserPkgManager } from "~/src/utils/getUserPkgManager.js";
 import { logger } from "~/src/utils/logger.js";
 import { renderTitle } from "~/src/utils/renderTitle.js";
-import { installDependencies } from "~/src/helpers/installDependencies.js";
-import { getVersion } from "~/src/utils/getKubbSwaggerCliVersion.js";
 import { getNpmVersion, renderVersionWarning } from "~/src/utils/renderVersionWarning.js";
-import { processOpenApiDocument } from "~/src/scripts";
-import ora from "ora";
-import chalk from "chalk";
-import { kubbGenCommand } from "~/src/helpers/runKubbGen";
 
 type KubbSwaggerCliPackageJSON = PackageJson & {
 	cKubbSwaggerCliaMetadata?: {
@@ -63,7 +63,7 @@ const main = async () => {
 	}
 
 	const spinner = ora({
-		text: `Running the schema validation for this file ${importSwaggerFilePath}...`,
+		text: `Running the schema validation for this file ${importSwaggerFilePath}...\n`,
 		discardStdin: false,
 	}).start();
 	await processOpenApiDocument(importSwaggerFilePath);

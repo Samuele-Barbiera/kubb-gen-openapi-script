@@ -1,8 +1,8 @@
 import chalk from "chalk";
-import { execa, type StdioOption } from "execa";
+import { type StdioOption, execa } from "execa";
 import ora, { type Ora } from "ora";
 
-import { getUserPkgManager, type PackageManager } from "~/src/utils/getUserPkgManager.js";
+import { type PackageManager, getUserPkgManager } from "~/src/utils/getUserPkgManager.js";
 import { logger } from "~/src/utils/logger.js";
 
 const execWithSpinner = async (
@@ -16,7 +16,7 @@ const execWithSpinner = async (
 ) => {
 	const { onDataHandle, args = ["install"], stdout = "pipe" } = options;
 
-	const spinner = ora({ text: `Running ${pkgManager} install...`, discardStdin: false }).start();
+	const spinner = ora({ text: `Running ${pkgManager} install...` }).start();
 	const subprocess = execa(pkgManager, args, { cwd: projectDir, stdout });
 
 	await new Promise<void>((res, rej) => {
@@ -73,7 +73,7 @@ export const installDependencies = async ({
 	const pkgManager = getUserPkgManager();
 
 	const installSpinner = await runInstallCommand(pkgManager, projectDir);
-	
+
 	// If the spinner was used to show the progress, use succeed method on it
 	// If not, use the succeed on a new spinner
 	(installSpinner ?? ora({ discardStdin: false })).succeed(chalk.green("Successfully installed dependencies!\n"));
