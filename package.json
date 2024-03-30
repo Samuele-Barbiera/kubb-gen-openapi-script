@@ -1,7 +1,14 @@
 {
 	"name": "gen-sdk-api",
-	"version": "0.1.0",
-	"keywords": ["gen-sdk-api", "init.tips", "kubb-gen", "scribe", "openapi", "typescript"],
+	"version": "0.1.2",
+	"keywords": [
+		"gen-sdk-api",
+		"init.tips",
+		"kubb-gen",
+		"scribe",
+		"openapi",
+		"typescript"
+	],
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/Samuele-Barbiera/kubb-gen-scribe-cli.git"
@@ -15,7 +22,14 @@
 	"bin": {
 		"gen-sdk-api": "./dist/index.js"
 	},
-	"files": ["dist", "template", "README.md", "LICENSE", "CHANGELOG.md", "package.json"],
+	"files": [
+		"dist",
+		"template",
+		"README.md",
+		"LICENSE",
+		"CHANGELOG.md",
+		"package.json"
+	],
 	"scripts": {
 		"build": "tsup",
 		"check": "pnpm dlx @biomejs/biome check --apply-unsafe .",
@@ -39,7 +53,6 @@
 		"@clack/core": "^0.3.4",
 		"@clack/prompts": "^0.7.0",
 		"@kubb/cli": "^2.11.1",
-
 		"@total-typescript/ts-reset": "^0.5.1",
 		"chalk": "5.3.0",
 		"commander": "^12.0.0",

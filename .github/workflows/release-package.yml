@@ -1,9 +1,5 @@
-name: Node.js Package
+name: Release
 on:
-  workflow_run:
-    workflows: [CI]
-    branches: [main]
-    types: [completed]
   release:
     types: [created]
 
