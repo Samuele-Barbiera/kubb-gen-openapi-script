@@ -46,7 +46,7 @@ jobs:
 
       - run: |
           echo @Samuele-Barbiera:https://npm.pkg.github.com/ > build/.npmrc
-          echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> build/.npmrc
+      - run: npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"
 
       - name: Create Version PR or Publish to NPM
         id: changesets
@@ -58,5 +58,5 @@ jobs:
           publish: npx changeset publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_ENV: "production"

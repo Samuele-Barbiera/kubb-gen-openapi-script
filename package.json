@@ -18,7 +18,7 @@
 	"files": ["dist", "template", "README.md", "LICENSE", "CHANGELOG.md", "package.json"],
 	"scripts": {
 		"build": "tsup",
-		"check": "bunx @biomejs/biome check --apply-unsafe .",
+		"check": "pnpm dlx @biomejs/biome check --apply-unsafe .",
 		"clean": "rm -rf dist  node_modules",
 		"commit": "git add . && pnpm cz  && git pull",
 		"dev": "tsup --watch",
