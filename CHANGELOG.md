@@ -1,5 +1,11 @@
 # @gen-sdk-api/root
 
+## 0.1.3
+
+### Patch Changes
+
+- min fix on creation with templates for kubb on react
+
 ## 0.1.2
 
 ### Patch Changes

@@ -4,9 +4,10 @@ import fs from "fs-extra";
 import type { AvailableDependencies } from "~/src/installers/dependencyVersionMap";
 import type { Installer } from "~/src/installers/index.js";
 import { addPackageDependency } from "~/src/utils/addPackageDependency";
+import { PKG_ROOT } from "~/consts";
 
 export const dynamicKubbAxiosInstaller: Installer = ({ projectDir, packages }) => {
-	const deps: AvailableDependencies[] = ["@kubb/core", "@kubb/swagger-ts", "@kubb/swagger"];
+	const deps: AvailableDependencies[] = ["@kubb/core", "@kubb/swagger-ts", "@kubb/swagger", "@kubb/react"];
 
 	addPackageDependency({
 		projectDir,
@@ -14,11 +15,8 @@ export const dynamicKubbAxiosInstaller: Installer = ({ projectDir, packages }) =
 		devMode: false,
 	});
 
-	const sourceTemplatesDir = path.join(projectDir, "templatesSDK");
-
-	const tanstackKubbDir = path.join(projectDir, "templates/axios");
-
-	fs.copySync(tanstackKubbDir, sourceTemplatesDir);
+	const sourceTemplatesDir = path.join(PKG_ROOT, "templates/axios");
+	fs.copySync(sourceTemplatesDir, path.join(projectDir, "templatesSDK/client"));
 
 	const axiosFileContent = [
 		"import { defineConfig } from '@kubb/core';",

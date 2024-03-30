@@ -21,11 +21,8 @@ export const dynamicKubbTanstackInstaller: Installer = ({ projectDir, packages }
 		devMode: false,
 	});
 
-	const sourceTemplatesDir = path.join(projectDir, "templatesSDK");
-
-	const tanstackKubbDir = path.join(projectDir, "templates/tanstack-query");
-
-	fs.copySync(tanstackKubbDir, sourceTemplatesDir);
+	const sourceTemplatesDir = path.join(PKG_ROOT, "templates/tanstack-query");
+	fs.copySync(sourceTemplatesDir, path.join(projectDir, "templatesSDK"));
 
 	const tanstackFileContent = [
 		"import { defineConfig } from '@kubb/core';",
