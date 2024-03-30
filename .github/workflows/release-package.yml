@@ -40,8 +40,8 @@ jobs:
 
       - run: |
           echo @Samuele-Barbiera:https://npm.pkg.github.com/ > ./.npmrc
-          echo '//npm.pkg.github.com/:_authToken=${NPM_TOKEN}' >> ./.npmrc
-
+      - run: npm config set '//registry.npmjs.org/:_authToken' "${NPM_TOKEN}"     
+      
       - run: npm publish
         working-directory: ./
 
