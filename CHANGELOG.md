@@ -1,5 +1,11 @@
 # @gen-sdk-api/root
 
+## 0.1.4
+
+### Patch Changes
+
+- min fix on npm publishing
+
 ## 0.1.3
 
 ### Patch Changes
