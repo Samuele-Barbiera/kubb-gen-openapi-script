@@ -1,102 +1,88 @@
 {
-  "name": "gen-sdk-api",
-  "version": "0.3.1",
-  "keywords": [
-    "gen-sdk-api",
-    "init.tips",
-    "kubb-gen",
-    "scribe",
-    "openapi",
-    "typescript"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Samuele-Barbiera/kubb-gen-scribe-cli.git"
-  },
-  "license": "MIT",
-  "type": "module",
-  "exports": "./dist/index.js",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
-  "bin": {
-    "gen-sdk-api": "dist/index.js"
-  },
-  "files": [
-    "dist",
-    "template",
-    "README.md",
-    "LICENSE",
-    "CHANGELOG.md",
-    "package.json"
-  ],
-  "scripts": {
-    "build": "tsup",
-    "check": "pnpm dlx @biomejs/biome check --apply-unsafe .",
-    "clean": "rm -rf dist  node_modules",
-    "commit": "git add . && pnpm cz  && git pull && git push",
-    "dev": "tsup --watch",
-    "preinstall": "npx only-allow pnpm",
-    "lint": "pnpm  tsc",
-    "release": "pnpm run build && changeset && changeset version && changeset publish",
-    "start": "node dist/index.js",
-    "update-deps": "pnpm dlx npm-check-updates -i --format group -u && pnpm i"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-emoji"
-    }
-  },
-  "dependencies": {
-    "@biomejs/biome": "1.6.3",
-    "@changesets/cli": "^2.27.1",
-    "@clack/core": "^0.3.4",
-    "@clack/prompts": "^0.7.0",
-    "@kubb/cli": "^2.11.1",
-    "@kubb/core": "^2.11.0",
-    "@kubb/react": "2.11.0",
-    "@kubb/swagger": "^2.11.0",
-    "@kubb/swagger-tanstack-query": "^2.11.0",
-    "@kubb/swagger-ts": "^2.11.0",
-    "@total-typescript/ts-reset": "^0.5.1",
-    "chalk": "5.3.0",
-    "commander": "^12.0.0",
-    "cz-conventional-changelog": "^3.3.0",
-    "cz-emoji": "1.3.2-canary.2",
-    "execa": "^8.0.1",
-    "figlet": "^1.7.0",
-    "fs-extra": "^11.2.0",
-    "gradient-string": "^2.0.2",
-    "js-yaml": "^4.1.0",
-    "ora": "8.0.1",
-    "react": "^18.2.0",
-    "sort-package-json": "^2.10.0",
-    "tsup": "^8.0.2"
-  },
-  "devDependencies": {
-    "@changesets/changelog-github": "^0.5.0",
-    "@kubb/core": "^2.11.1",
-    "@kubb/react": "^2.11.1",
-    "@kubb/swagger": "^2.11.1",
-    "@kubb/swagger-tanstack-query": "^2.11.1",
-    "@kubb/swagger-ts": "^2.11.1",
-    "@types/figlet": "^1.5.8",
-    "@types/fs-extra": "^11.0.4",
-    "@types/js-yaml": "^4.0.9",
-    "@types/react": "^18.2.73",
-    "type-fest": "^4.14.0"
-  },
-  "peerDependencies": {
-    "typescript": "^5.4.3"
-  },
-  "packageManager": "pnpm@8.15.5",
-  "engines": {
-    "node": ">=18.17.0"
-  },
-  "publishConfig": {
-    "@Samuele-Barbiera:registry": "https://npm.pkg.github.com"
-  },
-  "cKubbSwaggerCliaMetadata": {
-    "initVersion": "0.1.2"
-  }
+	"name": "gen-sdk-api",
+	"version": "0.3.1",
+	"keywords": ["gen-sdk-api", "init.tips", "kubb-gen", "scribe", "openapi", "typescript"],
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Samuele-Barbiera/kubb-gen-scribe-cli.git"
+	},
+	"license": "MIT",
+	"type": "module",
+	"exports": "./dist/index.js",
+	"main": "dist/index.js",
+	"module": "dist/index.mjs",
+	"types": "dist/index.d.ts",
+	"bin": {
+		"gen-sdk-api": "dist/index.js"
+	},
+	"files": ["dist", "templates", "README.md", "LICENSE", "CHANGELOG.md", "package.json"],
+	"scripts": {
+		"build": "tsup",
+		"check": "pnpm dlx @biomejs/biome check --apply-unsafe .",
+		"clean": "rm -rf dist  node_modules",
+		"commit": "pnpm release && git add . && pnpm cz  && git pull && git push",
+		"dev": "tsup --watch",
+		"preinstall": "npx only-allow pnpm",
+		"lint": "pnpm  tsc",
+		"release": "pnpm run build && changeset",
+		"start": "node dist/index.js",
+		"update-deps": "pnpm dlx npm-check-updates -i --format group -u && pnpm i"
+	},
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/cz-emoji"
+		}
+	},
+	"dependencies": {
+		"@biomejs/biome": "1.6.3",
+		"@changesets/cli": "^2.27.1",
+		"@clack/core": "^0.3.4",
+		"@clack/prompts": "^0.7.0",
+		"@kubb/cli": "^2.11.1",
+		"@kubb/core": "^2.11.0",
+		"@kubb/react": "2.11.0",
+		"@kubb/swagger": "^2.11.0",
+		"@kubb/swagger-tanstack-query": "^2.11.0",
+		"@kubb/swagger-ts": "^2.11.0",
+		"@total-typescript/ts-reset": "^0.5.1",
+		"chalk": "5.3.0",
+		"commander": "^12.0.0",
+		"cz-conventional-changelog": "^3.3.0",
+		"cz-emoji": "1.3.2-canary.2",
+		"execa": "^8.0.1",
+		"figlet": "^1.7.0",
+		"fs-extra": "^11.2.0",
+		"gradient-string": "^2.0.2",
+		"js-yaml": "^4.1.0",
+		"ora": "8.0.1",
+		"react": "^18.2.0",
+		"sort-package-json": "^2.10.0",
+		"tsup": "^8.0.2"
+	},
+	"devDependencies": {
+		"@changesets/changelog-github": "^0.5.0",
+		"@kubb/core": "^2.11.1",
+		"@kubb/react": "^2.11.1",
+		"@kubb/swagger": "^2.11.1",
+		"@kubb/swagger-tanstack-query": "^2.11.1",
+		"@kubb/swagger-ts": "^2.11.1",
+		"@types/figlet": "^1.5.8",
+		"@types/fs-extra": "^11.0.4",
+		"@types/js-yaml": "^4.0.9",
+		"@types/react": "^18.2.73",
+		"type-fest": "^4.14.0"
+	},
+	"peerDependencies": {
+		"typescript": "^5.4.3"
+	},
+	"packageManager": "pnpm@8.15.5",
+	"engines": {
+		"node": ">=18.17.0"
+	},
+	"publishConfig": {
+		"@Samuele-Barbiera:registry": "https://npm.pkg.github.com"
+	},
+	"cKubbSwaggerCliaMetadata": {
+		"initVersion": "0.1.2"
+	}
 }
