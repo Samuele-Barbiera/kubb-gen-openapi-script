@@ -30,7 +30,7 @@ jobs:
         run: pnpm install --no-frozen-lockfile
 
       - name: Authenticate to NPM
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > /.npmrc
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
 
       - name: Check for errors
         run: pnpm check
