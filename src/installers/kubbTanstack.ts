@@ -13,6 +13,7 @@ export const dynamicKubbTanstackInstaller: Installer = ({ projectDir, packages }
 		"@kubb/swagger-ts",
 		"@kubb/swagger",
 		"@kubb/react",
+		"@kubb/swagger-client"
 	];
 
 	addPackageDependency({
