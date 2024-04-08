@@ -1,7 +1,8 @@
 import { type URLObject, URLPath } from "@kubb/core/utils";
-import { Function as FunctionKubb, Type } from "@kubb/react";
+// biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
+import { Editor, Function, Type } from "@kubb/react";
 import { QueryKey } from "@kubb/swagger-tanstack-query/components";
-import { useOperation, useOperationSchemas } from "@kubb/swagger/hooks";
+import { useOperation, useOperationManager } from "@kubb/swagger/hooks";
 // biome-ignore lint/style/useImportType: <explanation>
 import React from "react";
 
@@ -15,8 +16,10 @@ export const templates = {
 		returnType,
 		JSDoc,
 	}: React.ComponentProps<typeof QueryKey.templates.react>) => {
-		const schemas = useOperationSchemas();
 		const operation = useOperation();
+		const { getSchemas } = useOperationManager();
+
+		const schemas = getSchemas(operation);
 		const path = new URLPath(operation.path);
 		const withQueryParams = !!schemas.queryParams?.name;
 
@@ -30,7 +33,7 @@ export const templates = {
 
 		return (
 			<>
-				<FunctionKubb.Arrow
+				<Function.Arrow
 					name={name}
 					export
 					generics={generics}
@@ -40,7 +43,7 @@ export const templates = {
 					JSDoc={JSDoc}
 				>
 					{`[${keys}] as const`}
-				</FunctionKubb.Arrow>
+				</Function.Arrow>
 
 				<Type
 					name={typeName}
