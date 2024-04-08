@@ -44,6 +44,14 @@ Sure, here's a continuation of the [`README.md`](command:_github.copilot.openRel
 
 The `gen-sdk-api` CLI tool is used to generate SDKs for your React/TypeScript application based on a Swagger/OpenAPI document. Here's a step-by-step guide on how it works:
 
+
+0. **Selecting the lib / framework**: The CLI prompts you to select the configuration you'd like to use. You can choose between `React` and `Angular`. This selection determines the lib / framework that will be connected to the kubb config.
+
+```bash
+? What lib / framework you are currently using? (Use arrow keys)
+❯ React
+  Angular
+
 1. **Selecting the Configuration**: The CLI prompts you to select the configuration you'd like to use. You can choose between `Axios` and `Tanstack-query`. This selection determines the packages that will be installed and the files and folders that will be imported.
 
 ```bash
