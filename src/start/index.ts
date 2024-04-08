@@ -80,7 +80,7 @@ export const runCli = async (): Promise<CliResults> => {
 					return p.select({
 						message: "What kubb config would you like to use?",
 						options: [
-							{ value: "axios", label: "Axios" },
+							// { value: "axios", label: "Axios" },
 							{ value: "tanstack-query", label: "Tanstack-query" },
 						],
 						initialValue: "tanstack-query",
