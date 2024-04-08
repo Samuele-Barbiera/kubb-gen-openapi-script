@@ -1,5 +1,11 @@
 # @gen-sdk-api/root
 
+## 0.3.5
+
+### Patch Changes
+
+- min fix dir for template sdk for tanstack config
+
 ## 0.3.4
 
 ### Patch Changes

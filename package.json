@@ -1,6 +1,6 @@
 {
 	"name": "gen-sdk-api",
-	"version": "0.3.4",
+	"version": "0.3.5",
 	"keywords": [
 		"gen-sdk-api",
 		"init.tips",
@@ -89,9 +89,6 @@
 	"packageManager": "pnpm@8.15.5",
 	"engines": {
 		"node": ">=18.17.0"
-	},
-	"publishConfig": {
-		"@Samuele-Barbiera:registry": "https://npm.pkg.github.com"
 	},
 	"cKubbSwaggerCliaMetadata": {
 		"initVersion": "0.1.2"
