@@ -1,5 +1,11 @@
 # @gen-sdk-api/root
 
+## 0.3.3
+
+### Patch Changes
+
+- [`c6c9420`](https://github.com/Samuele-Barbiera/kubb-gen-scribe-cli/commit/c6c94202f4803dec1ffead5e42ce479649996706) Thanks [@Samuele-Barbiera](https://github.com/Samuele-Barbiera)! - min fix on pkg json
+
 ## 0.3.2
 
 ### Patch Changes
