@@ -27,7 +27,7 @@ jobs:
           cache: "pnpm"
 
       - name: Install NPM Dependencies
-        run: pnpm install
+        run: pnpm install --no-frozen-lockfile
 
       - name: Authenticate to NPM
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > /.npmrc
