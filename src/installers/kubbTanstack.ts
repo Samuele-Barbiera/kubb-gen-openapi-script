@@ -13,7 +13,7 @@ export const dynamicKubbTanstackInstaller: Installer = ({ projectDir, packages }
 		"@kubb/swagger-ts",
 		"@kubb/swagger",
 		"@kubb/react",
-		"@kubb/swagger-client"
+		"@kubb/swagger-client",
 	];
 
 	addPackageDependency({
@@ -27,9 +27,9 @@ export const dynamicKubbTanstackInstaller: Installer = ({ projectDir, packages }
 
 	const tanstackFileContent = [
 		"import { defineConfig } from '@kubb/core';",
-		"import createSwaggerTS from '@kubb/swagger-ts';",
-		"import createSwagger from '@kubb/swagger';",
-		"import createSwaggerTanstackQuery from '@kubb/swagger-tanstack-query';",
+		"import { definePlugin as createSwagger } from '@kubb/swagger';",
+		"import { definePlugin as createSwaggerTanstackQuery } from '@kubb/swagger-tanstack-query';",
+		"import { definePlugin as createSwaggerTS } from '@kubb/swagger-ts';",
 
 		"import * as mutation from './api/templatesSDK/mutate/index';",
 		"import * as operations from './api/templatesSDK/operations/index';",
@@ -71,7 +71,7 @@ export const dynamicKubbTanstackInstaller: Installer = ({ projectDir, packages }
 		"override: [",
 		"{",
 		"type: 'operationId',",
-		"pattern: 'findPetsByTags',",
+		"pattern: 'findDataByTags',",
 		"options: {",
 		"dataReturnType: 'full',",
 		"infinite: {",
@@ -86,7 +86,7 @@ export const dynamicKubbTanstackInstaller: Installer = ({ projectDir, packages }
 		"},",
 		"{",
 		"type: 'operationId',",
-		"pattern: 'updatePetWithForm',",
+		"pattern: 'updateDataWithForm',",
 		"options: {",
 		"query: {",
 		"queryKey: (key: unknown[]) => key,",

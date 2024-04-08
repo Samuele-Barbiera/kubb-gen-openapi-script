@@ -26,9 +26,9 @@ export const dynamicKubbAxiosInstaller: Installer = ({ projectDir, packages }) =
 
 	const axiosFileContent = [
 		"import { defineConfig } from '@kubb/core';",
-		"import createSwaggerClient from '@kubb/swagger-client';",
-		"import createSwaggerTS from '@kubb/swagger-ts';",
-		"import createSwagger from '@kubb/swagger';",
+		"import { definePlugin as createSwagger } from '@kubb/swagger';",
+		"import { definePlugin as createSwaggerTanstackQuery } from '@kubb/swagger-tanstack-query';",
+		"import { definePlugin as createSwaggerTS } from '@kubb/swagger-ts';",
 		"import * as client from './api/templatesSDK/client'",
 
 		"export default defineConfig(async () => {",
