@@ -7,7 +7,13 @@ import { addPackageDependency } from "~/src/utils/addPackageDependency";
 import { PKG_ROOT } from "~/consts";
 
 export const dynamicKubbAxiosInstaller: Installer = ({ projectDir, packages }) => {
-	const deps: AvailableDependencies[] = ["@kubb/core", "@kubb/swagger-ts", "@kubb/swagger", "@kubb/react"];
+	const deps: AvailableDependencies[] = [
+		"@kubb/core",
+		"@kubb/swagger-ts",
+		"@kubb/swagger",
+		"@kubb/react",
+		"@kubb/swagger-client",
+	];
 
 	addPackageDependency({
 		projectDir,
