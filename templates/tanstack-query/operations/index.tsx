@@ -1,19 +1,21 @@
 import path from "node:path";
-import { Editor, File, Type, usePlugin } from "@kubb/react";
-import { usePluginManager } from "@kubb/react";
+import { Editor, File, Type, useApp } from "@kubb/react";
 import type { FileMeta, PluginOptions } from "@kubb/swagger-tanstack-query";
 import { Operations } from "@kubb/swagger-tanstack-query/components";
-import { useOperationHelpers, useOperations } from "@kubb/swagger/hooks";
+import { useOperationManager, useOperations } from "@kubb/swagger/hooks";
 // biome-ignore lint/style/useImportType: <explanation>
 import React from "react";
 
 export const templates = {
 	...Operations.templates,
-	root: (_props: React.ComponentProps<typeof Operations.templates.root>) => {
-		const pluginManager = usePluginManager();
-		const { key: pluginKey } = usePlugin<PluginOptions>();
+	// biome-ignore lint/correctness/noEmptyPattern: <explanation>
+	root: ({}: React.ComponentProps<typeof Operations.templates.root>) => {
+		const {
+			plugin: { key: pluginKey },
+			pluginManager,
+		} = useApp<PluginOptions>();
 		const operations = useOperations();
-		const { getName, getSchemas } = useOperationHelpers();
+		const { getName, getSchemas } = useOperationManager();
 
 		const root = path.resolve(pluginManager.config.root, pluginManager.config.output.path);
 

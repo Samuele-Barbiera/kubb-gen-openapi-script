@@ -1,10 +1,11 @@
-import path from "node:path";
-import transformers from "@kubb/core/transformers";
-import { File, Function as FunctionKubb, usePluginManager } from "@kubb/react";
-import { Mutation } from "@kubb/swagger-tanstack-query/components";
-import { useGetOperationFile } from "@kubb/swagger/hooks";
+// biome-ignore lint/suspicious/noShadowRestrictedNames: <explanation>
+import { File, Function, useApp } from "@kubb/react";
 // biome-ignore lint/style/useImportType: <explanation>
 import React from "react";
+import path from "node:path";
+import transformers from "@kubb/core/transformers";
+import { Mutation } from "@kubb/swagger-tanstack-query/components";
+import { useOperation, useOperationManager } from "@kubb/swagger/hooks";
 
 export const templates = {
 	...Mutation.templates,
@@ -16,8 +17,11 @@ export const templates = {
 		hook,
 		dataReturnType,
 	}: React.ComponentProps<typeof Mutation.templates.react>) => {
-		const pluginManager = usePluginManager();
-		const file = useGetOperationFile();
+		const { pluginManager } = useApp();
+		const operation = useOperation();
+		const { getFile } = useOperationManager();
+
+		const file = getFile(operation);
 		const clientOptions = [
 			`method: "${client.method}"`,
 			`url: ${client.path.template}`,
@@ -37,10 +41,10 @@ export const templates = {
 			<>
 				<File.Import
 					name={["useInvalidationForMutation"]}
-					path={path.join(root, "../useInvalidationForMutation.ts")}
+					path={path.join(root, "../templatesSDK/useInvalidationForMutation.ts")}
 					root={file.path}
 				/>
-				<FunctionKubb
+				<Function
 					export
 					name={name}
 					params={params}
@@ -68,7 +72,7 @@ export const templates = {
          },
          ...mutationOptions
        })`}
-				</FunctionKubb>
+				</Function>
 			</>
 		);
 	},
