@@ -53,12 +53,11 @@ The `gen-sdk-api` CLI tool is used to generate SDKs for your React/TypeScript ap
   Angular
 ```
 
-1. **Selecting the Configuration**: The CLI prompts you to select the configuration you'd like to use. You can choose between `Axios` and `Tanstack-query`. This selection determines the packages that will be installed and the files and folders that will be imported.
+1. **Selecting the Configuration**: The CLI prompts you to select the configuration you'd like to use. You can choose `Tanstack-query`. This selection determines the packages that will be installed and the files and folders that will be imported.
 
 ```bash
 ? What kubb config would you like to use? (Use arrow keys)
-❯ Axios
-  Tanstack-query
+❯ Tanstack-query
 ```
 
 2. **Installing Dependencies**: If you haven't set the `noInstall` flag, the CLI will prompt you to confirm whether it should run the installation command for you. This step installs the necessary dependencies for the selected configuration.
