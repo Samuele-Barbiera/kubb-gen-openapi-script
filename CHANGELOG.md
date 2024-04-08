@@ -1,5 +1,17 @@
 # @gen-sdk-api/root
 
+## 0.4.0
+
+### Minor Changes
+
+- [`0fa69db`](https://github.com/Samuele-Barbiera/kubb-gen-scribe-cli/commit/0fa69dbc57b0d99272c3f6591f8521ae1d4c478b) Thanks [@Samuele-Barbiera](https://github.com/Samuele-Barbiera)! - fix on deprecated path import on every template and added the getInvalidationForMutation
+
+### Patch Changes
+
+- [`3933ef1`](https://github.com/Samuele-Barbiera/kubb-gen-scribe-cli/commit/3933ef1cf85d84b1bdad20c0b122debd01e706e1) Thanks [@Samuele-Barbiera](https://github.com/Samuele-Barbiera)! - fix on axios not configured for angular config
+
+* [`143e8a7`](https://github.com/Samuele-Barbiera/kubb-gen-scribe-cli/commit/143e8a7852bfde7662ee31bb2fbad8234a4329a2) Thanks [@Samuele-Barbiera](https://github.com/Samuele-Barbiera)! - Fix configuration selection in gen-sdk-api CLI
+
 ## 0.3.6
 
 ### Patch Changes
