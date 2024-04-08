@@ -51,6 +51,7 @@ The `gen-sdk-api` CLI tool is used to generate SDKs for your React/TypeScript ap
 ? What lib / framework you are currently using? (Use arrow keys)
 ❯ React
   Angular
+```
 
 1. **Selecting the Configuration**: The CLI prompts you to select the configuration you'd like to use. You can choose between `Axios` and `Tanstack-query`. This selection determines the packages that will be installed and the files and folders that will be imported.
 
