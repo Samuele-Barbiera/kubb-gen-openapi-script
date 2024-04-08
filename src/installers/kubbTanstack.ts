@@ -22,7 +22,7 @@ export const dynamicKubbTanstackInstaller: Installer = ({ projectDir, packages }
 	});
 
 	const sourceTemplatesDir = path.join(PKG_ROOT, "templates/tanstack-query");
-	fs.copySync(sourceTemplatesDir, path.join(projectDir, "templatesSDK"));
+	fs.copySync(sourceTemplatesDir, path.join(projectDir, "api/templatesSDK"));
 
 	const tanstackFileContent = [
 		"import { defineConfig } from '@kubb/core';",
@@ -64,7 +64,7 @@ export const dynamicKubbTanstackInstaller: Installer = ({ projectDir, packages }
 		"},",
 		"framework: 'react',",
 		"query: {",
-		"queryKey: keys => ['v5', ...keys],",
+		"queryKey: keys => ['\"v5\"', ...keys],",
 		"},",
 		"suspense: {},",
 		"override: [",

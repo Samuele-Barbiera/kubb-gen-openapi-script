@@ -66,6 +66,16 @@ export const runCli = async (): Promise<CliResults> => {
 
 		const project = await p.group(
 			{
+				chooseFramework: () => {
+					return p.select({
+						message: "What lib / framework you are currently using?",
+						options: [
+							{ value: "angular", label: "Angular" },
+							{ value: "react", label: "React" },
+						],
+						initialValue: "react",
+					});
+				},
 				runKubb: () => {
 					return p.select({
 						message: "What kubb config would you like to use?",
@@ -103,9 +113,11 @@ export const runCli = async (): Promise<CliResults> => {
 
 		const packages: AvailablePackages[] = [];
 
-		if (project.runKubb === "tanstack-query") {
+		if (project.chooseFramework === "react" &&  project.runKubb === "tanstack-query") {
 			packages.push("kubbTanstack");
-		} else {
+		} else if (project.chooseFramework === "angular" &&  project.runKubb === "axios") {
+			packages.push("kubbAxios");
+		} else if (project.chooseFramework === "react" &&  project.runKubb === "axios") {
 			packages.push("kubbAxios");
 		}
 

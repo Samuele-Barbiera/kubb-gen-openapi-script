@@ -16,14 +16,14 @@ export const dynamicKubbAxiosInstaller: Installer = ({ projectDir, packages }) =
 	});
 
 	const sourceTemplatesDir = path.join(PKG_ROOT, "templates/axios");
-	fs.copySync(sourceTemplatesDir, path.join(projectDir, "templatesSDK/client"));
+	fs.copySync(sourceTemplatesDir, path.join(projectDir, "api/templatesSDK/client"));
 
 	const axiosFileContent = [
 		"import { defineConfig } from '@kubb/core';",
 		"import createSwaggerClient from '@kubb/swagger-client';",
 		"import createSwaggerTS from '@kubb/swagger-ts';",
 		"import createSwagger from '@kubb/swagger';",
-		"import * as client from './templatesSDK/client'",
+		"import * as client from './api/templatesSDK/client'",
 
 		"export default defineConfig(async () => {",
 		"await setTimeout(() => {",
