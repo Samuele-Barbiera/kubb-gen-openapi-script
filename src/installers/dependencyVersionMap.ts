@@ -4,10 +4,11 @@
  */
 export const dependencyVersionMap = {
 	// Kubb
-	"@kubb/core": "^2.11.0",
-	"@kubb/swagger": "^2.11.0",
-	"@kubb/swagger-tanstack-query": "^2.11.0",
-	"@kubb/swagger-ts": "^2.11.0",
-	"@kubb/react": "2.11.0",
+	"@kubb/core": "^2.12.5",
+	"@kubb/swagger": "^2.12.5",
+	"@kubb/swagger-tanstack-query": "^2.12.5",
+	"@kubb/swagger-ts": "^2.12.5",
+	"@kubb/swagger-client": "^2.12.5",
+	"@kubb/react": "^2.12.5",
 } as const;
 export type AvailableDependencies = keyof typeof dependencyVersionMap;

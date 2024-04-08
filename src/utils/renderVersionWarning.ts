@@ -35,7 +35,7 @@ interface DistTagsBody {
 function checkForLatestVersion(): Promise<string> {
 	return new Promise((resolve, reject) => {
 		https
-			.get("https://registry.npmjs.org/-/package/kubb-gen-scribe-cli/dist-tags", res => {
+			.get("https://registry.npmjs.org/-/package/gen-sdk-api/dist-tags", res => {
 				if (res.statusCode === 200) {
 					let body = "";
 					// biome-ignore lint/suspicious/noAssignInExpressions: <explanation>

@@ -1,6 +1,6 @@
 {
 	"name": "gen-sdk-api",
-	"version": "0.3.1",
+	"version": "0.3.2",
 	"keywords": ["gen-sdk-api", "init.tips", "kubb-gen", "scribe", "openapi", "typescript"],
 	"repository": {
 		"type": "git",
@@ -24,7 +24,7 @@
 		"dev": "tsup --watch",
 		"preinstall": "npx only-allow pnpm",
 		"lint": "pnpm  tsc",
-		"release": "pnpm run build && changeset",
+		"release": "pnpm run build && pnpm changeset && pnpm changeset version && pnpm changeset publish",
 		"start": "node dist/index.js",
 		"update-deps": "pnpm dlx npm-check-updates -i --format group -u && pnpm i"
 	},
@@ -34,16 +34,10 @@
 		}
 	},
 	"dependencies": {
-		"@biomejs/biome": "1.6.3",
+		"@biomejs/biome": "1.6.4",
 		"@changesets/cli": "^2.27.1",
 		"@clack/core": "^0.3.4",
 		"@clack/prompts": "^0.7.0",
-		"@kubb/cli": "^2.11.1",
-		"@kubb/core": "^2.11.0",
-		"@kubb/react": "2.11.0",
-		"@kubb/swagger": "^2.11.0",
-		"@kubb/swagger-tanstack-query": "^2.11.0",
-		"@kubb/swagger-ts": "^2.11.0",
 		"@total-typescript/ts-reset": "^0.5.1",
 		"chalk": "5.3.0",
 		"commander": "^12.0.0",
@@ -61,19 +55,20 @@
 	},
 	"devDependencies": {
 		"@changesets/changelog-github": "^0.5.0",
-		"@kubb/core": "^2.11.1",
-		"@kubb/react": "^2.11.1",
-		"@kubb/swagger": "^2.11.1",
-		"@kubb/swagger-tanstack-query": "^2.11.1",
-		"@kubb/swagger-ts": "^2.11.1",
+		"@kubb/core": "^2.12.5",
+		"@kubb/cli": "^2.12.5",
+		"@kubb/react": "2.12.5",
+		"@kubb/swagger-ts": "^2.12.5",
+		"@kubb/swagger": "^2.12.5",
+		"@kubb/swagger-tanstack-query": "^2.12.5",
 		"@types/figlet": "^1.5.8",
 		"@types/fs-extra": "^11.0.4",
 		"@types/js-yaml": "^4.0.9",
-		"@types/react": "^18.2.73",
-		"type-fest": "^4.14.0"
+		"@types/react": "^18.2.74",
+		"type-fest": "^4.15.0"
 	},
 	"peerDependencies": {
-		"typescript": "^5.4.3"
+		"typescript": "^5.4.4"
 	},
 	"packageManager": "pnpm@8.15.5",
 	"engines": {
