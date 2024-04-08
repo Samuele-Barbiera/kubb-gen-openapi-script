@@ -30,9 +30,9 @@ export const dynamicKubbTanstackInstaller: Installer = ({ projectDir, packages }
 		"import createSwagger from '@kubb/swagger';",
 		"import createSwaggerTanstackQuery from '@kubb/swagger-tanstack-query';",
 
-		"import * as mutation from './templatesSDK/mutate/index';",
-		"import * as operations from './templatesSDK/operations/index';",
-		"import * as queryKey from './templatesSDK/queryKey/index';",
+		"import * as mutation from './api/templatesSDK/mutate/index';",
+		"import * as operations from './api/templatesSDK/operations/index';",
+		"import * as queryKey from './api/templatesSDK/queryKey/index';",
 
 		"export default defineConfig(async () => {",
 		"	return {",
