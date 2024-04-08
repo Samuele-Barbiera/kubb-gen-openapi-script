@@ -1,5 +1,11 @@
 # @gen-sdk-api/root
 
+## 0.3.6
+
+### Patch Changes
+
+- [`cbb0516`](https://github.com/Samuele-Barbiera/kubb-gen-scribe-cli/commit/cbb0516c68aed8e5aea0728040235a7c091827e4) Thanks [@Samuele-Barbiera](https://github.com/Samuele-Barbiera)! - min fix on deps install swagger-client
+
 ## 0.3.5
 
 ### Patch Changes
