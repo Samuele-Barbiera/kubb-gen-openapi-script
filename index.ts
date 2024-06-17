@@ -101,7 +101,7 @@ const main = async () => {
 	spinner.succeed(chalk.green("Conversion and check of the swagger schema done"));
 
 	// Step 12: Run the kubbGenCommand to generate the code based on the projectDir
-	await kubbGenCommand({ projectDir });
+	// await kubbGenCommand({ projectDir });
 
 	// Step 13: Exit the process with code 0 if everything is successful
 	process.exit(0);
