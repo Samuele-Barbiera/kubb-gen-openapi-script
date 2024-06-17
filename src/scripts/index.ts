@@ -102,6 +102,89 @@ async function removeBlacklistedParameters(blacklistFileConfigPath: string, yaml
 	logger.info("Parameters removed successfully.");
 }
 
+interface PathData {
+	[path: string]: {
+		[method: string]: {
+			responses: {
+				[status: string]: {
+					content: {
+						"application/json": {
+							schema: any;
+						};
+					};
+				};
+			};
+		};
+	};
+}
+
+interface ComponentData {
+	[schemaName: string]: {
+		type: string;
+		properties?: any;
+		$ref?: string;
+	};
+}
+
+const addSchemas = (pathData: PathData, componentData: ComponentData) => {
+	for (const [path, methods] of Object.entries(pathData)) {
+		for (const [method, data] of Object.entries(methods)) {
+			if (data.responses && componentData.schemas) {
+				componentData.schemas = componentData.schemas || {};
+				for (const [status, response] of Object.entries(data.responses)) {
+					if (response.content?.["application/json"]) {
+						// Sanitize schema name
+						const schemaName = `${path.replace(/\//g, "_").slice(1)}_${method.toLowerCase()}_response`.replace(
+							/[^a-zA-Z0-9.-_]/g,
+							""
+						);
+
+						// Check if schema name matches the regular expression
+						if (/^[a-zA-Z0-9.-_]+$/.test(schemaName)) {
+							// Schema name is valid, proceed with adding it to components
+							const schema = response.content["application/json"].schema;
+							componentData.schemas[schemaName] = {
+								type: "object",
+								properties: schema.properties,
+							};
+							response.content["application/json"].schema = {
+								$ref: `#/components/schemas/${schemaName}`,
+							};
+						} else {
+							// Schema name is not valid, handle the error or take appropriate action
+							console.error("Invalid schema name:", schemaName);
+						}
+					}
+				}
+			}
+		}
+	}
+};
+
+const readFile = async (filePath: string): Promise<any> => {
+	return new Promise((resolve, reject) => {
+		fs.readFile(filePath, "utf8", (err, data) => {
+			if (err) {
+				reject(err);
+			} else {
+				resolve(yaml.load(data));
+			}
+		});
+	});
+};
+
+const writeFile = async (filePath: string, data: any): Promise<void> => {
+	return new Promise((resolve, reject) => {
+		fs.writeFile(filePath, yaml.dump(data), "utf8", err => {
+			if (err) {
+				reject(err);
+			} else {
+				resolve();
+			}
+		});
+	});
+};
+
 /**
  * Main function to process the OpenAPI document.
  * @param openApiFilePath - The path to the OpenAPI YAML file.
@@ -109,20 +192,15 @@ async function removeBlacklistedParameters(blacklistFileConfigPath: string, yaml
  */
 export async function processOpenApiDocument(openApiFilePath: string, blacklistFileConfigPath?: string): Promise<void> {
 	try {
-		// Load the OpenAPI document from a YAML file
-		const openApiDocument = await loadOpenApiDocument(openApiFilePath);
-
-		// Process the OpenAPI document by removing unmatched path parameters
-		const updatedDocument = processDocument(openApiDocument);
-
-		// Save the updated OpenAPI document as a new YAML file
-		await saveOpenApiDocument(openApiFilePath.replace(".yaml", "_updated.yaml"), updatedDocument);
-
-		logger.info("OpenAPI document processed. Unmatched path parameters removed.");
-
-		// Remove blacklisted parameters from the OpenAPI document
-		if (blacklistFileConfigPath) await removeBlacklistedParameters(blacklistFileConfigPath, "openapi_updated.yaml");
+		const openapiData = await readFile(openApiFilePath);
+		const pathData: PathData = openapiData.paths;
+		const componentData: ComponentData = {};
+		addSchemas(pathData, componentData);
+		openapiData.components = openapiData.components || {};
+		openapiData.components = { ...openapiData.components, ...componentData };
+		await writeFile(openApiFilePath.replace(".yaml", "_updated.yaml"), openapiData);
+		console.log("Modified OpenAPI file has been saved successfully.");
 	} catch (error) {
-		console.error("An error occurred:", error);
+		console.error("Error modifying OpenAPI file:", error);
 	}
 }
