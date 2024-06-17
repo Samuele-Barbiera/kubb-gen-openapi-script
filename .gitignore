@@ -182,3 +182,5 @@ templatesSDK/mutate/index.tsx
 templatesSDK/operations/index.tsx
 templatesSDK/queryKey/index.tsx
 api.yaml
+api_updated.yaml
+
